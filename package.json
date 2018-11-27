@@ -31,7 +31,8 @@
   },
   "scripts": {
     "start": "nodemon --exec ts-node src/index.ts",
-    "gen-schema-types": "gql2ts src/schema.graphql -o src/types/schema.d.ts",
+    "gen-schema-types": "gql2ts src/schemaTypes/schema.graphql -o src/types/schema.d.ts",
+    "gen-schema-types-orderbook": "gql2ts src/schemaTypes/orderbook.graphql -o src/types/orderbookSchema.d.ts",
     "fetch": "babel-node scripts/ws-fetch"
   }
 }
