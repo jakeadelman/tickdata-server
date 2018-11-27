@@ -1,0 +1,63 @@
+type Query {
+  hello(name: String): String!
+  quote(
+    timestamp: String
+    symbol: String
+    bidSize: Int
+    bidPrice: Float
+    askPrice: Float
+    askSize: Int
+  ): [Quote]
+
+  tick(
+    timestamp: String
+    symbol: String
+    side: String
+    size: Int
+    price: Float
+    tickDirection: String
+    trdMatchID: String
+  ): [Tick]
+}
+
+type Mutation {
+  register(email: String!, password: String!): Boolean
+
+  newquote(
+    timestamp: String!
+    symbol: String!
+    bidSize: Int!
+    bidPrice: Float!
+    askPrice: Float!
+    askSize: Int!
+  ): Boolean
+
+  newtick(
+    timestamp: String!
+    symbol: String!
+    side: String!
+    size: Int!
+    price: Float!
+    tickDirection: String!
+    trdMatchID: String!
+  ): Boolean
+}
+
+type Quote {
+  timestamp: String!
+  symbol: String!
+  bidSize: Int!
+  bidPrice: Float!
+  askPrice: Float!
+  askSize: Int!
+}
+
+type Tick {
+  timestamp: String!
+  symbol: String!
+  side: String!
+  size: Int!
+  price: Float!
+  tickDirection: String!
+  trdMatchID: String!
+}
