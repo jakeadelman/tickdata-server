@@ -33,6 +33,7 @@ export namespace GQL {
 
   interface IQuoteOnQueryArguments {
     timestamp?: string | null;
+    hour?: string | null;
     symbol?: string | null;
     bidSize?: number | null;
     bidPrice?: number | null;
@@ -42,6 +43,7 @@ export namespace GQL {
 
   interface ITickOnQueryArguments {
     timestamp?: string | null;
+    hour?: string | null;
     symbol?: string | null;
     side?: string | null;
     size?: number | null;
@@ -63,6 +65,7 @@ export namespace GQL {
   interface ITick {
     __typename: "Tick";
     timestamp: string;
+    hour: string;
     symbol: string;
     side: string;
     size: number;
@@ -85,6 +88,7 @@ export namespace GQL {
 
   interface INewquoteOnMutationArguments {
     timestamp: string;
+    hour: string;
     symbol: string;
     bidSize: number;
     bidPrice: number;
@@ -94,6 +98,7 @@ export namespace GQL {
 
   interface INewtickOnMutationArguments {
     timestamp: string;
+    hour: string;
     symbol: string;
     side: string;
     size: number;

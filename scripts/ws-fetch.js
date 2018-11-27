@@ -2,6 +2,7 @@ const fetch = require("node-fetch");
 
 const BitMEXClient = require("bitmex-realtime-api");
 const client = new BitMEXClient({ testnet: false });
+const dateFormat = require("dateformat");
 
 client.addStream("XBTUSD", "quote", async (data, symbol, tableName) => {
   if (!data.length) return;
@@ -13,10 +14,14 @@ client.addStream("XBTUSD", "quote", async (data, symbol, tableName) => {
     let bidPrice = parseFloat(quote.bidPrice);
     let askSize = parseInt(quote.askSize);
     let askPrice = parseFloat(quote.askPrice);
+    let hour = new Date(quote.timestamp);
+    let datetime = dateFormat(hour, "yyyy-mm-dd hh:MM:ss.l");
+    let concatHour = dateFormat(hour, "yymmddhh");
 
     const variables = {
-      timestamp: quote.timestamp,
+      timestamp: datetime,
       symbol: quote.symbol,
+      hour: concatHour,
       bidSize: bidSize,
       bidPrice: bidPrice,
       askPrice: askPrice,
@@ -26,6 +31,7 @@ client.addStream("XBTUSD", "quote", async (data, symbol, tableName) => {
     const query = `
       mutation newquote(
         $timestamp: String!
+        $hour: String!
         $symbol: String!
         $bidSize: Int!
         $bidPrice: Float!
@@ -34,6 +40,7 @@ client.addStream("XBTUSD", "quote", async (data, symbol, tableName) => {
       ) {
         newquote(
           timestamp: $timestamp
+          hour: $hour
           symbol: $symbol
           bidSize: $bidSize
           bidPrice: $bidPrice
@@ -72,9 +79,13 @@ client.addStream("XBTUSD", "trade", async (data, symbol, tableName) => {
   if (trade) {
     let size = parseInt(trade.size);
     let price = parseFloat(trade.price);
+    let hour = new Date(trade.timestamp);
+    let datetime = dateFormat(hour, "yyyy-mm-dd hh:MM:ss.l");
+    let concatHour = dateFormat(hour, "yymmddhh");
 
     const variables = {
-      timestamp: trade.timestamp,
+      timestamp: datetime,
+      hour: concatHour,
       symbol: trade.symbol,
       side: trade.side,
       size: size,
@@ -86,6 +97,7 @@ client.addStream("XBTUSD", "trade", async (data, symbol, tableName) => {
     const query = `
     mutation newtick(
       $timestamp: String!,
+      $hour: String!,
       $symbol: String!,
       $side: String!,
       $size: Int!,
@@ -95,6 +107,7 @@ client.addStream("XBTUSD", "trade", async (data, symbol, tableName) => {
     ) {
       newtick(
         timestamp: $timestamp,
+        hour: $hour,
         symbol: $symbol,
         side: $side,
         size: $size,

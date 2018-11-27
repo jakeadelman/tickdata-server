@@ -8,10 +8,12 @@ export const resolvers: ResolverMap = {
   Query: {
     hello: (_, { name }: GQL.IHelloOnQueryArguments) =>
       `Hello ${name || "World"}`,
-    quote: async (_, {  }: GQL.IQuoteOnQueryArguments) => {
+    quote: async (_, { hour }: GQL.IQuoteOnQueryArguments) => {
       const t = await Quote.find({
+        where: { hour: hour },
         select: [
           "timestamp",
+          "hour",
           "symbol",
           "bidSize",
           "bidPrice",
@@ -22,10 +24,12 @@ export const resolvers: ResolverMap = {
       console.log(t[0]);
       return t;
     },
-    tick: async (_, {  }: GQL.ITickOnQueryArguments) => {
+    tick: async (_, { hour }: GQL.ITickOnQueryArguments) => {
       const t = await Tick.find({
+        where: { hour: hour },
         select: [
           "timestamp",
+          "hour",
           "symbol",
           "side",
           "size",
@@ -54,6 +58,7 @@ export const resolvers: ResolverMap = {
       _,
       {
         timestamp,
+        hour,
         symbol,
         bidSize,
         bidPrice,
@@ -63,6 +68,7 @@ export const resolvers: ResolverMap = {
     ) => {
       const quote = Quote.create({
         timestamp,
+        hour,
         symbol,
         bidSize,
         bidPrice,
@@ -76,6 +82,7 @@ export const resolvers: ResolverMap = {
       _,
       {
         timestamp,
+        hour,
         symbol,
         side,
         size,
@@ -86,6 +93,7 @@ export const resolvers: ResolverMap = {
     ) => {
       const tick = Tick.create({
         timestamp,
+        hour,
         symbol,
         side,
         size,
