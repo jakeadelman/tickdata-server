@@ -28,12 +28,15 @@
     "tslint": "^5.11.0",
     "tslint-config-prettier": "^1.16.0",
     "typeorm": "0.2.9",
-    "uuid": "^3.3.2"
+    "uuid": "^3.3.2",
+    "ws": "^6.1.2"
   },
   "scripts": {
     "start": "nodemon --exec ts-node src/index.ts",
     "gen-schema-types": "gql2ts src/schemaTypes/schema.graphql -o src/types/schema.d.ts",
     "gen-schema-types-orderbook": "gql2ts src/schemaTypes/orderbook.graphql -o src/types/orderbookSchema.d.ts",
-    "fetch": "babel-node scripts/ws-fetch"
+    "fetch": "babel-node scripts/ws-fetch",
+    "xbt-fetch": "babel-node scripts/XBT_fetch",
+    "orderbook-fetch": "babel-node scripts/orderbook_fetch"
   }
 }

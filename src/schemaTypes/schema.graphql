@@ -45,6 +45,14 @@ type Mutation {
     tickDirection: String!
     trdMatchID: String!
   ): Boolean
+
+  # neworderbook(symbol: String!, orderbooklevelarr: [OrderBookLevel!]!): Boolean
+  # neworderbooklevel(
+  #   symbol: String!
+  #   side: String!
+  #   price: Float
+  #   timestamp: String
+  # ): Boolean
 }
 
 type Quote {
@@ -66,3 +74,17 @@ type Tick {
   tickDirection: String!
   trdMatchID: String!
 }
+
+# type OrderBook {
+#   id: ID!
+#   symbol: String!
+#   orderbooklevels: [OrderBookLevel!]!
+# }
+
+# type OrderBookLevel {
+#   symbol: String
+#   side: String
+#   size: Int
+#   price: Float
+#   timestamp: String
+# }

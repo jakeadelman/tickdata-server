@@ -3,7 +3,6 @@ import { GQL } from "./types/schema";
 import { User } from "./entity/User";
 import { Quote } from "./entity/Quote";
 import { Tick } from "./entity/Tick";
-
 export const resolvers: ResolverMap = {
   Query: {
     hello: (_, { name }: GQL.IHelloOnQueryArguments) =>
@@ -104,5 +103,43 @@ export const resolvers: ResolverMap = {
       await tick.save();
       return true;
     }
+    // neworderbook: async (
+    //   _,
+    //   { symbol }: GQL.INeworderbookOnMutationArguments
+    // ) => {
+    //   const orderbook = OrderBook.create({
+    //     symbol
+    //   });
+    //   await orderbook.save();
+    //   return true;
+    // },
+    // neworderbooklevel: async (_, {})=> {
+    //   const orderbooklevel = Orderbook.insert
+    // }
+
+    // neworderbook: async (
+    //   _,
+    //   {symbol, orderbooklevels}: GQL.INeworderbookonMutationArguments => {
+    //   // const orderbook = OrderBook.create({
+    //   //   symbol,
+    //   //   side,
+    //   //   orderbooklevel: orderbookLevels
+    //   //   price,
+    //   //   tickDirection,
+    //   //   trdMatchID
+    //   // });
+    //   // await orderbook.save();
+    //   // return true;
+    // },
+    //     @Entity("orderbook")
+    // export class OrderBook extends BaseEntity {
+    //   @PrimaryGeneratedColumn("uuid") id: string;
+    //   @Column("text") symbol: string;
+    //   @Column("simple-json") orderbooklevel: {
+    //     side: String;
+    //     size: Int16Array;
+    //     price: Float32Array;
+    //     timestamp: String;
+    //   };
   }
 };

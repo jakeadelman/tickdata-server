@@ -1,4 +1,5 @@
 const fetch = require("node-fetch");
+const dateFormat = require("dateformat");
 
 const BitMEXClient = require("bitmex-realtime-api");
 const client = new BitMEXClient({ testnet: false });
@@ -28,27 +29,7 @@ client.addStream("XBTUSD", "quote", async (data, symbol, tableName) => {
       askSize: askSize
     };
 
-    const query = `
-      mutation newquote(
-        $timestamp: String!
-        $hour: String!
-        $symbol: String!
-        $bidSize: Int!
-        $bidPrice: Float!
-        $askPrice: Float!
-        $askSize: Int!
-      ) {
-        newquote(
-          timestamp: $timestamp
-          hour: $hour
-          symbol: $symbol
-          bidSize: $bidSize
-          bidPrice: $bidPrice
-          askPrice: $askPrice
-          askSize: $askSize
-        ) 
-      }
-    `;
+    
 
     fetch("http://localhost:4000", {
       method: "POST",
@@ -71,7 +52,7 @@ client.addStream("XBTUSD", "quote", async (data, symbol, tableName) => {
   }
 });
 
-client.addStream("XBTUSD", "trade", async (data, symbol, tableName) => {
+client.addStream("", "trade", async (data, symbol, tableName) => {
   if (!data.length) return;
   const trade = await data[data.length - 1]; // the last data element is the newest quote
   // Do something with the quote (.bidPrice, .bidSize, .askPrice, .askSize)
@@ -94,29 +75,7 @@ client.addStream("XBTUSD", "trade", async (data, symbol, tableName) => {
       trdMatchID: trade.trdMatchID
     };
 
-    const query = `
-    mutation newtick(
-      $timestamp: String!,
-      $hour: String!,
-      $symbol: String!,
-      $side: String!,
-      $size: Int!,
-      $price: Float!,
-      $tickDirection: String!,
-      $trdMatchID: String!
-    ) {
-      newtick(
-        timestamp: $timestamp,
-        hour: $hour,
-        symbol: $symbol,
-        side: $side,
-        size: $size,
-        price: $price,
-        tickDirection: $tickDirection,
-        trdMatchID: $trdMatchID
-      )
-      }
-    `;
+    
 
     fetch("http://localhost:4000", {
       method: "POST",
