@@ -7,9 +7,9 @@ export const resolvers: ResolverMap = {
   Query: {
     hello: (_, { name }: GQL.IHelloOnQueryArguments) =>
       `Hello ${name || "World"}`,
-    quote: async (_, { hour }: GQL.IQuoteOnQueryArguments) => {
+    quote: async (_, { hour, symbol }: GQL.IQuoteOnQueryArguments) => {
       const t = await Quote.find({
-        where: { hour: hour },
+        where: { hour: hour, symbol: symbol },
         select: [
           "timestamp",
           "hour",
@@ -23,9 +23,9 @@ export const resolvers: ResolverMap = {
       console.log(t[0]);
       return t;
     },
-    tick: async (_, { hour }: GQL.ITickOnQueryArguments) => {
+    tick: async (_, { hour, symbol }: GQL.ITickOnQueryArguments) => {
       const t = await Tick.find({
-        where: { hour: hour },
+        where: { hour: hour, symbol: symbol },
         select: [
           "timestamp",
           "hour",
