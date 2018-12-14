@@ -20,6 +20,26 @@ type Query {
     tickDirection: String
     trdMatchID: String
   ): [Tick]
+
+  chatmsg(
+    channelID: Int!
+    hour: String!
+    fromBot: Boolean!
+  ): [ChatMsg]
+
+  bitfinextick (
+  timestamp: String
+  hour: String!
+  bidPrice: Float
+  bidSize: Float
+  askPrice: Float
+  askSize: Float
+  dailyChange: Float
+  dailyChangePct: Float
+  dailyVolume: Float
+  dailyHigh: Float
+  dailyLow: Float
+  ): [BitfinexTick]
 }
 
 type Mutation {
@@ -46,13 +66,27 @@ type Mutation {
     trdMatchID: String!
   ): Boolean
 
-  # neworderbook(symbol: String!, orderbooklevelarr: [OrderBookLevel!]!): Boolean
-  # neworderbooklevel(
-  #   symbol: String!
-  #   side: String!
-  #   price: Float
-  #   timestamp: String
-  # ): Boolean
+  newchatmsg(
+    channelID: Int!
+    hour: String!
+    fromBot: Boolean!
+    message: String!
+  ): Boolean
+
+  newbitfinextick (
+  timestamp: String!
+  hour: String!
+  bidPrice: Float!
+  bidSize: Float!
+  askPrice: Float!
+  askSize: Float!
+  dailyChange: Float!
+  dailyChangePct: Float!
+  dailyVolume: Float!
+  dailyHigh: Float!
+  dailyLow: Float!
+  ): Boolean
+
 }
 
 type Quote {
@@ -75,16 +109,23 @@ type Tick {
   trdMatchID: String!
 }
 
-# type OrderBook {
-#   id: ID!
-#   symbol: String!
-#   orderbooklevels: [OrderBookLevel!]!
-# }
+type ChatMsg {
+  channelID: Int!
+  hour: String!
+  fromBot: Boolean!
+  message: String!
+}
 
-# type OrderBookLevel {
-#   symbol: String
-#   side: String
-#   size: Int
-#   price: Float
-#   timestamp: String
-# }
+type BitfinexTick {
+  timestamp: String!
+  hour: String!
+  bidPrice: Float!
+  bidSize: Float!
+  askPrice: Float!
+  askSize: Float!
+  dailyChange: Float!
+  dailyChangePct: Float!
+  dailyVolume: Float!
+  dailyHigh: Float!
+  dailyLow: Float!
+}

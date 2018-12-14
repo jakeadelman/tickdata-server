@@ -44,4 +44,49 @@ const newTickQuery = `
       }
     `;
 
-export { newQuoteQuery, newTickQuery };
+const newChatMsgQuery = `
+      mutation newchatmsg(
+        $channelID: Int!,
+        $hour: String!,
+        $fromBot: Boolean!,
+        $message: String!
+      ){ newchatmsg(
+        channelID: $channelID,
+        hour: $hour,
+        fromBot: $fromBot,
+        message: $message
+      )
+    }
+
+`
+const newBitfinexTickQuery = `
+      mutation newbitfinextick(
+        $timestamp: String!,
+        $hour: String!,
+        $bidPrice: Float!,
+        $bidSize: Float!,
+        $askPrice: Float!,
+        $askSize: Float!,
+        $dailyChange: Float!,
+        $dailyChangePct: Float!,
+        $dailyVolume: Float!,
+        $dailyHigh: Float!,
+        $dailyLow: Float!,
+      ){ newbitfinextick(
+        timestamp: $timestamp,
+        hour: $hour,
+        bidPrice: $bidPrice,
+        bidSize: $bidSize,
+        askPrice: $askPrice,
+        askSize: $askSize,
+        dailyChange: $dailyChange,
+        dailyChangePct: $dailyChangePct,
+        dailyVolume: $dailyVolume,
+        dailyHigh: $dailyHigh,
+        dailyLow: $dailyLow,
+      )
+    }
+
+`
+
+export { newChatMsgQuery, newQuoteQuery, newTickQuery, newBitfinexTickQuery };

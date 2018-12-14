@@ -17,8 +17,10 @@
     "@babel/preset-es2017": "^7.0.0-beta.53",
     "apollo-link-http": "^1.5.7",
     "bcrypt": "^3.0.2",
+    "bitfinex-api-node": "^2.0.4",
     "bitmex-realtime-api": "^0.4.0",
     "cors": "^2.8.5",
+    "ctype": "^0.5.5",
     "dateformat": "^3.0.3",
     "graphql-import": "^0.7.1",
     "graphql-yoga": "^1.16.7",
@@ -37,6 +39,9 @@
     "gen-schema-types-orderbook": "gql2ts src/schemaTypes/orderbook.graphql -o src/types/orderbookSchema.d.ts",
     "fetch": "babel-node scripts/ws-fetch",
     "xbt-fetch": "babel-node scripts/XBT_fetch",
-    "orderbook-fetch": "babel-node scripts/orderbook_fetch"
+    "orderbook-fetch": "babel-node scripts/orderbook_fetch",
+    "get-chat": "babel-node scripts/get_chat",
+    "bitfinex-fetch": "babel-node scripts/bitfinex_fetch",
+    "okex-fetch": "babel-node scripts/okex_fetch"
   }
 }
