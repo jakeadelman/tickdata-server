@@ -4,33 +4,6 @@
 2. cd tickdata-server
 3. yarn install
 4. Edit ormconfig.json with your postgresql db details
-5. Make sure your postgres db is set up and running
-
-
-now start the graphql server and the xbt-fetch script to get all quote and tick data logged to your postgres db
-
+5. Create postgres db and run postgres
 6. yarn start
 7. yarn bitmex-fetch
-
-you can access the graphql server on localhost:4000 and make graphql requests with the schema displayed from the sidebar
-
-and here is an example:
-<div>
-{
-<br />
-  tick(symbol:"XBTUSD", hour: "18120320"){
-  <br />
-    askPrice
-  <br />
-    bidPrice
-  <br />
-    timestamp
-  <br />
-    ...
-  <br />
-  }
-  <br />
-}
-  </div>
-
-the hour is in format YYMMDDHH, and you can always check your db for hour and symbol data to query the results you'd like to save
