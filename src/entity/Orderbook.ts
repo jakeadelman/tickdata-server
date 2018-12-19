@@ -1,15 +1,15 @@
-import { Entity, Column, PrimaryGeneratedColumn, BaseEntity } from "typeorm";
+import {Entity, Column, PrimaryGeneratedColumn, BaseEntity} from 'typeorm'
 
-@Entity("orderbook")
+@Entity('orderbook')
 export class OrderBook extends BaseEntity {
-  @PrimaryGeneratedColumn("uuid") id: string;
-  @Column("text") symbol: string;
-  @Column("simple-json") orderbooklevels: {
-    side: String;
-    size: Int16Array;
-    price: Float32Array;
-    timestamp: String;
-  };
+  @PrimaryGeneratedColumn() id: number
+  @Column('text') symbol: string
+  @Column('simple-json') orderbooklevels: {
+    side: String
+    size: Int16Array
+    price: Float32Array
+    timestamp: String
+  }
 }
 
 // class OrderBookLevel extends BaseEntity{

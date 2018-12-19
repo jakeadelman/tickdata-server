@@ -1,24 +1,23 @@
-import { newQuoteQuery, newTickQuery, newChatMsgQuery, newBitfinexTickQuery } from "./db_queries";
-const fetch = require("node-fetch");
-const dateFormat = require("dateformat");
+import {
+  newQuoteQuery,
+  newTickQuery,
+  newChatMsgQuery,
+  newBitfinexTickQuery
+} from './db_queries'
+const fetch = require('node-fetch')
+const dateFormat = require('dateformat')
 
-var mod_ctype = require('ctype');
-var parser = new mod_ctype.Parser({ endian: 'big' });
-parser.typedef('point_t', [
-    {}
-])
+var mod_ctype = require('ctype')
+var parser = new mod_ctype.Parser({endian: 'big'})
+parser.typedef('point_t', [{}])
 
-
-var WebSocket = require("ws");
-var ws = new WebSocket(
-    "wss://real.okex.com:10440/ws/v1"
-);
+var WebSocket = require('ws')
+var ws = new WebSocket('wss://real.okex.com:10440/ws/v1')
 
 ws.on('open', () => {
-    ws.send("{'event':'addChannel','channel':'ok_sub_spot_bch_btc_ticker'}")
-
+  ws.send("{'event':'addChannel','channel':'ok_sub_spot_bch_btc_ticker'}")
 })
-ws.on('message', (dat) => console.log(dat.toString()))
+ws.on('message', dat => console.log(dat.toString()))
 
 // const ws = bfx.ws();
 // ws.on('error', (err) => console.log(err))
