@@ -5,13 +5,18 @@ import { Quote } from "./entity/Quote";
 import { Tick } from "./entity/Tick";
 import { ChatMsg } from "./entity/ChatMsg";
 import { BitfinexTick } from "./entity/BitfinexTick";
+
 export const resolvers: ResolverMap = {
   Query: {
     hello: (_, { name }: GQL.IHelloOnQueryArguments) =>
       `Hello ${name || "World"}`,
     quote: async (_, { hour, symbol }: GQL.IQuoteOnQueryArguments) => {
+
+
       const t = await Quote.find({
-        where: { hour: hour, symbol: symbol },
+        where: {
+          hour: hour, symbol: symbol
+        },
         select: [
           "timestamp",
           "hour",
@@ -22,8 +27,8 @@ export const resolvers: ResolverMap = {
           "askSize"
         ]
       });
-      console.log(t[0]);
       return t;
+
     },
     tick: async (_, { hour, symbol }: GQL.ITickOnQueryArguments) => {
       const t = await Tick.find({
@@ -88,30 +93,30 @@ export const resolvers: ResolverMap = {
       await user.save();
       return true;
     },
-    newquote: async (
-      _,
-      {
-        timestamp,
-        hour,
-        symbol,
-        bidSize,
-        bidPrice,
-        askPrice,
-        askSize
-      }: GQL.INewquoteOnMutationArguments
-    ) => {
-      const quote = Quote.create({
-        timestamp,
-        hour,
-        symbol,
-        bidSize,
-        bidPrice,
-        askPrice,
-        askSize
-      });
-      await quote.save();
-      return true;
-    },
+    // newquote: async (
+    //   _,
+    //   {
+    //     timestamp,
+    //     hour,
+    //     symbol,
+    //     bidSize,
+    //     bidPrice,
+    //     askPrice,
+    //     askSize
+    //   }: GQL.INewquoteOnMutationArguments
+    // ) => {
+    //   const quote = Quote.create({
+    //     timestamp,
+    //     hour,
+    //     symbol,
+    //     bidSize,
+    //     bidPrice,
+    //     askPrice,
+    //     askSize
+    //   });
+    //   await quote.save();
+    //   return true;
+    // },
     newtick: async (
       _,
       {

@@ -2,7 +2,7 @@ type Query {
   hello(name: String): String!
   quote(
     timestamp: String
-    hour: String
+    hour: String!
     symbol: String
     bidSize: Int
     bidPrice: Float
@@ -12,7 +12,7 @@ type Query {
 
   tick(
     timestamp: String
-    hour: String
+    hour: String!
     symbol: String
     side: String
     size: Int
@@ -91,6 +91,7 @@ type Mutation {
 
 type Quote {
   timestamp: String!
+  hour: String!
   symbol: String!
   bidSize: Int!
   bidPrice: Float!

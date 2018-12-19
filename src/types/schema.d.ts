@@ -1,5 +1,6 @@
 // tslint:disable
 // graphql typescript definitions
+
 export namespace GQL {
     interface IGraphQLResponseRoot {
         data?: IQuery | IMutation;
@@ -34,7 +35,7 @@ export namespace GQL {
 
     interface IQuoteOnQueryArguments {
         timestamp?: string | null;
-        hour?: string | null;
+        hour: string;
         symbol?: string | null;
         bidSize?: number | null;
         bidPrice?: number | null;
@@ -44,7 +45,7 @@ export namespace GQL {
 
     interface ITickOnQueryArguments {
         timestamp?: string | null;
-        hour?: string | null;
+        hour: string;
         symbol?: string | null;
         side?: string | null;
         size?: number | null;
@@ -76,6 +77,7 @@ export namespace GQL {
     interface IQuote {
         __typename: "Quote";
         timestamp: string;
+        hour: string;
         symbol: string;
         bidSize: number;
         bidPrice: number;
