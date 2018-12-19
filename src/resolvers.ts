@@ -11,13 +11,13 @@ export const resolvers: ResolverMap = {
     hello: (_, { name }: GQL.IHelloOnQueryArguments) =>
       `Hello ${name || "World"}`,
     quote: async (_, { hour, symbol }: GQL.IQuoteOnQueryArguments) => {
-
-
       const t = await Quote.find({
         where: {
-          hour: hour, symbol: symbol
+          hour: hour,
+          symbol: symbol
         },
         select: [
+          "id",
           "timestamp",
           "hour",
           "symbol",
@@ -28,12 +28,12 @@ export const resolvers: ResolverMap = {
         ]
       });
       return t;
-
     },
     tick: async (_, { hour, symbol }: GQL.ITickOnQueryArguments) => {
       const t = await Tick.find({
         where: { hour: hour, symbol: symbol },
         select: [
+          "id",
           "timestamp",
           "hour",
           "symbol",
@@ -50,12 +50,7 @@ export const resolvers: ResolverMap = {
     chatmsg: async (_, { hour, channelID }: GQL.IChatmsgOnQueryArguments) => {
       const t = await ChatMsg.find({
         where: { hour: hour, channelID: channelID },
-        select: [
-          "channelID",
-          "hour",
-          "fromBot",
-          "message"
-        ]
+        select: ["channelID", "hour", "fromBot", "message"]
       });
       console.log(t[0]);
       return t;
@@ -93,30 +88,30 @@ export const resolvers: ResolverMap = {
       await user.save();
       return true;
     },
-    // newquote: async (
-    //   _,
-    //   {
-    //     timestamp,
-    //     hour,
-    //     symbol,
-    //     bidSize,
-    //     bidPrice,
-    //     askPrice,
-    //     askSize
-    //   }: GQL.INewquoteOnMutationArguments
-    // ) => {
-    //   const quote = Quote.create({
-    //     timestamp,
-    //     hour,
-    //     symbol,
-    //     bidSize,
-    //     bidPrice,
-    //     askPrice,
-    //     askSize
-    //   });
-    //   await quote.save();
-    //   return true;
-    // },
+    newquote: async (
+      _,
+      {
+        timestamp,
+        hour,
+        symbol,
+        bidSize,
+        bidPrice,
+        askPrice,
+        askSize
+      }: GQL.INewquoteOnMutationArguments
+    ) => {
+      const quote = Quote.create({
+        timestamp,
+        hour,
+        symbol,
+        bidSize,
+        bidPrice,
+        askPrice,
+        askSize
+      });
+      await quote.save();
+      return true;
+    },
     newtick: async (
       _,
       {
@@ -145,12 +140,7 @@ export const resolvers: ResolverMap = {
     },
     newchatmsg: async (
       _,
-      {
-        channelID,
-        hour,
-        fromBot,
-        message
-      }: GQL.INewchatmsgOnMutationArguments
+      { channelID, hour, fromBot, message }: GQL.INewchatmsgOnMutationArguments
     ) => {
       const chatmsg = ChatMsg.create({
         channelID,
@@ -174,7 +164,7 @@ export const resolvers: ResolverMap = {
         dailyChangePct,
         dailyVolume,
         dailyHigh,
-        dailyLow,
+        dailyLow
       }: GQL.INewbitfinextickOnMutationArguments
     ) => {
       const bitfinextick = BitfinexTick.create({
@@ -188,11 +178,10 @@ export const resolvers: ResolverMap = {
         dailyChangePct,
         dailyVolume,
         dailyHigh,
-        dailyLow,
+        dailyLow
       });
       await bitfinextick.save();
       return true;
     }
-  },
-
+  }
 };

@@ -21,24 +21,20 @@ type Query {
     trdMatchID: String
   ): [Tick]
 
-  chatmsg(
-    channelID: Int!
-    hour: String!
-    fromBot: Boolean!
-  ): [ChatMsg]
+  chatmsg(channelID: Int!, hour: String!, fromBot: Boolean!): [ChatMsg]
 
-  bitfinextick (
-  timestamp: String
-  hour: String!
-  bidPrice: Float
-  bidSize: Float
-  askPrice: Float
-  askSize: Float
-  dailyChange: Float
-  dailyChangePct: Float
-  dailyVolume: Float
-  dailyHigh: Float
-  dailyLow: Float
+  bitfinextick(
+    timestamp: String
+    hour: String!
+    bidPrice: Float
+    bidSize: Float
+    askPrice: Float
+    askSize: Float
+    dailyChange: Float
+    dailyChangePct: Float
+    dailyVolume: Float
+    dailyHigh: Float
+    dailyLow: Float
   ): [BitfinexTick]
 }
 
@@ -73,23 +69,23 @@ type Mutation {
     message: String!
   ): Boolean
 
-  newbitfinextick (
-  timestamp: String!
-  hour: String!
-  bidPrice: Float!
-  bidSize: Float!
-  askPrice: Float!
-  askSize: Float!
-  dailyChange: Float!
-  dailyChangePct: Float!
-  dailyVolume: Float!
-  dailyHigh: Float!
-  dailyLow: Float!
+  newbitfinextick(
+    timestamp: String!
+    hour: String!
+    bidPrice: Float!
+    bidSize: Float!
+    askPrice: Float!
+    askSize: Float!
+    dailyChange: Float!
+    dailyChangePct: Float!
+    dailyVolume: Float!
+    dailyHigh: Float!
+    dailyLow: Float!
   ): Boolean
-
 }
 
 type Quote {
+  id: Int!
   timestamp: String!
   hour: String!
   symbol: String!
