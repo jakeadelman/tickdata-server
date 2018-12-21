@@ -22,6 +22,7 @@
     "cors": "^2.8.5",
     "ctype": "^0.5.5",
     "dateformat": "^3.0.3",
+    "forever-monitor": "^1.7.1",
     "graphql-import": "^0.7.1",
     "graphql-yoga": "^1.16.7",
     "merge-graphql-schemas": "^1.5.8",
@@ -34,7 +35,7 @@
     "ws": "^6.1.2"
   },
   "scripts": {
-    "start": "nodemon --exec ts-node src/index.ts",
+    "start": "nodemon --exec ts-node forever.ts",
     "gen-schema-types": "gql2ts src/schemaTypes/schema.graphql -o src/types/schema.d.ts",
     "gen-schema-types-orderbook": "gql2ts src/schemaTypes/orderbook.graphql -o src/types/orderbookSchema.d.ts",
     "fetch": "babel-node scripts/ws-fetch",
