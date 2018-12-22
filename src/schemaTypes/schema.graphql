@@ -1,6 +1,7 @@
 type Query {
   hello(name: String): String!
   quote(
+    id: Int
     timestamp: String
     hour: String!
     symbol: String
@@ -11,6 +12,7 @@ type Query {
   ): [Quote]
 
   tick(
+    id: Int
     timestamp: String
     hour: String!
     symbol: String
@@ -96,6 +98,7 @@ type Quote {
 }
 
 type Tick {
+  id: Int!
   timestamp: String!
   hour: String!
   symbol: String!

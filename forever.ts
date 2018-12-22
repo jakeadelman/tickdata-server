@@ -1,7 +1,7 @@
 var forever = require('forever-monitor')
 
 var child = new forever.Monitor('src/index.ts', {
-  max: 3,
+  max: 10,
   silent: true,
   args: [],
   command: 'ts-node'

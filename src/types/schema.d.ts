@@ -34,6 +34,7 @@ export namespace GQL {
   }
 
   interface IQuoteOnQueryArguments {
+    id?: number | null
     timestamp?: string | null
     hour: string
     symbol?: string | null
@@ -44,6 +45,7 @@ export namespace GQL {
   }
 
   interface ITickOnQueryArguments {
+    id?: number | null
     timestamp?: string | null
     hour: string
     symbol?: string | null
@@ -88,6 +90,7 @@ export namespace GQL {
 
   interface ITick {
     __typename: 'Tick'
+    id: number
     timestamp: string
     hour: string
     symbol: string
