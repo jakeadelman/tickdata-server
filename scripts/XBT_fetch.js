@@ -16,9 +16,15 @@ ws.on('message', data => {
       let bidP = parseFloat(res.bidPrice)
       let askS = parseInt(res.askSize)
       let askP = parseFloat(res.askPrice)
-      let hour = new Date(res.timestamp)
-      let datetime = dateFormat(hour, 'yyyy-mm-dd hh:MM:ss.l')
-      let concatHour = dateFormat(hour, 'yymmddhh')
+
+      let datetime = dateFormat(res.timestamp, "UTC:yyyy-mm-dd'T'HH:MM:ss.l'Z'")
+      let concatHour = datetime.toString()
+      let str1 = concatHour.substring(2, 4)
+      let str2 = concatHour.substring(5, 7)
+      let str3 = concatHour.substring(8, 10)
+      let str4 = concatHour.substring(11, 13)
+
+      concatHour = str1 + str2 + str3 + str4
 
       const variables = {
         timestamp: datetime,
@@ -54,9 +60,18 @@ ws.on('message', data => {
     trade.map(trade => {
       let size = parseInt(trade.size)
       let price = parseFloat(trade.price)
-      let hour = new Date(trade.timestamp)
-      let datetime = dateFormat(hour, 'yyyy-mm-dd hh:MM:ss.l')
-      let concatHour = dateFormat(hour, 'yymmddhh')
+
+      let datetime = dateFormat(
+        trade.timestamp,
+        "UTC:yyyy-mm-dd'T'HH:MM:ss.l'Z'"
+      )
+      let concatHour = datetime.toString()
+      let str1 = concatHour.substring(2, 4)
+      let str2 = concatHour.substring(5, 7)
+      let str3 = concatHour.substring(8, 10)
+      let str4 = concatHour.substring(11, 13)
+
+      concatHour = str1 + str2 + str3 + str4
 
       const variables = {
         timestamp: datetime,
