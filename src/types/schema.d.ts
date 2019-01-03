@@ -27,6 +27,7 @@ export namespace GQL {
     tick: Array<ITick | null> | null
     chatmsg: Array<IChatMsg | null> | null
     bitfinextick: Array<IBitfinexTick | null> | null
+    tweet: Array<ITweet | null> | null
   }
 
   interface IHelloOnQueryArguments {
@@ -57,9 +58,9 @@ export namespace GQL {
   }
 
   interface IChatmsgOnQueryArguments {
-    channelID: number
+    channelID?: number | null
     hour: string
-    fromBot: boolean
+    fromBot?: boolean | null
   }
 
   interface IBitfinextickOnQueryArguments {
@@ -74,6 +75,24 @@ export namespace GQL {
     dailyVolume?: number | null
     dailyHigh?: number | null
     dailyLow?: number | null
+  }
+
+  interface ITweetOnQueryArguments {
+    timestamp?: string | null
+    hour: string
+    screenName?: string | null
+    id?: string | null
+    isRetweet?: boolean | null
+    isPinned?: boolean | null
+    isReplyTo?: boolean | null
+    text?: string | null
+    userMentions?: string | null
+    hashtags?: string | null
+    images?: string | null
+    urls?: string | null
+    replyCount?: number | null
+    retweetCount?: number | null
+    favoriteCount?: number | null
   }
 
   interface IQuote {
@@ -124,6 +143,25 @@ export namespace GQL {
     dailyLow: number
   }
 
+  interface ITweet {
+    __typename: 'Tweet'
+    timestamp: string
+    hour: string
+    screenName: string
+    tweetId: string
+    isRetweet: boolean
+    isPinned: boolean
+    isReplyTo: boolean
+    text: string
+    userMentions: string
+    hashtags: string
+    images: string
+    urls: string
+    replyCount: number
+    retweetCount: number
+    favoriteCount: number
+  }
+
   interface IMutation {
     __typename: 'Mutation'
     register: boolean | null
@@ -131,6 +169,7 @@ export namespace GQL {
     newtick: boolean | null
     newchatmsg: boolean | null
     newbitfinextick: boolean | null
+    newtweet: boolean | null
   }
 
   interface IRegisterOnMutationArguments {
@@ -178,6 +217,24 @@ export namespace GQL {
     dailyVolume: number
     dailyHigh: number
     dailyLow: number
+  }
+
+  interface INewtweetOnMutationArguments {
+    timestamp: string
+    hour: string
+    screenName: string
+    tweetId: string
+    isRetweet: boolean
+    isPinned: boolean
+    isReplyTo: boolean
+    text: string
+    userMentions: string
+    hashtags: string
+    images: string
+    urls: string
+    replyCount: number
+    retweetCount: number
+    favoriteCount: number
   }
 }
 

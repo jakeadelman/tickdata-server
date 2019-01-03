@@ -23,7 +23,7 @@ type Query {
     trdMatchID: String
   ): [Tick]
 
-  chatmsg(channelID: Int!, hour: String!, fromBot: Boolean!): [ChatMsg]
+  chatmsg(channelID: Int, hour: String!, fromBot: Boolean): [ChatMsg]
 
   bitfinextick(
     timestamp: String
@@ -38,6 +38,24 @@ type Query {
     dailyHigh: Float
     dailyLow: Float
   ): [BitfinexTick]
+
+  tweet(
+    timestamp: String
+    hour: String!
+    screenName: String
+    id: String
+    isRetweet: Boolean
+    isPinned: Boolean
+    isReplyTo: Boolean
+    text: String
+    userMentions: String
+    hashtags: String
+    images: String
+    urls: String
+    replyCount: Int
+    retweetCount: Int
+    favoriteCount: Int
+  ): [Tweet]
 }
 
 type Mutation {
@@ -84,6 +102,24 @@ type Mutation {
     dailyHigh: Float!
     dailyLow: Float!
   ): Boolean
+
+  newtweet(
+    timestamp: String!
+    hour: String!
+    screenName: String!
+    tweetId: String!
+    isRetweet: Boolean!
+    isPinned: Boolean!
+    isReplyTo: Boolean!
+    text: String!
+    userMentions: String!
+    hashtags: String!
+    images: String!
+    urls: String!
+    replyCount: Int!
+    retweetCount: Int!
+    favoriteCount: Int!
+  ): Boolean
 }
 
 type Quote {
@@ -128,4 +164,22 @@ type BitfinexTick {
   dailyVolume: Float!
   dailyHigh: Float!
   dailyLow: Float!
+}
+
+type Tweet {
+  timestamp: String!
+  hour: String!
+  screenName: String!
+  tweetId: String!
+  isRetweet: Boolean!
+  isPinned: Boolean!
+  isReplyTo: Boolean!
+  text: String!
+  userMentions: String!
+  hashtags: String!
+  images: String!
+  urls: String!
+  replyCount: Int!
+  retweetCount: Int!
+  favoriteCount: Int!
 }

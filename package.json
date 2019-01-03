@@ -23,11 +23,13 @@
     "ctype": "^0.5.5",
     "dateformat": "^3.0.3",
     "forever-monitor": "^1.7.1",
+    "global": "^4.3.2",
     "graphql-import": "^0.7.1",
     "graphql-yoga": "^1.16.7",
     "merge-graphql-schemas": "^1.5.8",
     "pg": "^7.6.1",
     "reflect-metadata": "^0.1.12",
+    "scrape-twitter": "^0.11.1",
     "tslint": "^5.11.0",
     "tslint-config-prettier": "^1.16.0",
     "typeorm": "0.2.9",
@@ -43,6 +45,7 @@
     "orderbook-fetch": "babel-node scripts/orderbook_fetch",
     "get-chat": "babel-node scripts/get_chat",
     "bitfinex-fetch": "babel-node scripts/bitfinex_fetch",
-    "okex-fetch": "babel-node scripts/okex_fetch"
+    "okex-fetch": "babel-node scripts/okex_fetch",
+    "scrape-twitter": "babel-node scripts/twitter_scraper.js"
   }
 }

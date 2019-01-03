@@ -5,6 +5,7 @@ import {Quote} from './entity/Quote'
 import {Tick} from './entity/Tick'
 import {ChatMsg} from './entity/ChatMsg'
 import {BitfinexTick} from './entity/BitfinexTick'
+import {Tweet} from './entity/Tweet'
 
 export const resolvers: ResolverMap = {
   Query: {
@@ -73,6 +74,28 @@ export const resolvers: ResolverMap = {
         ]
       })
       console.log(t[0])
+      return t
+    },
+    tweet: async (_, {hour}: GQL.ITweetOnQueryArguments) => {
+      const t = await Tweet.find({
+        where: {hour: hour},
+        select: [
+          'timestamp',
+          'hour',
+          'screenName',
+          'tweetId',
+          'isRetweet',
+          'isReplyTo',
+          'text',
+          'userMentions',
+          'hashtags',
+          'images',
+          'urls',
+          'replyCount',
+          'retweetCount',
+          'favoriteCount'
+        ]
+      })
       return t
     }
   },
@@ -181,6 +204,44 @@ export const resolvers: ResolverMap = {
         dailyLow
       })
       await bitfinextick.save()
+      return true
+    },
+    newtweet: async (
+      _,
+      {
+        timestamp,
+        hour,
+        screenName,
+        tweetId,
+        isRetweet,
+        isReplyTo,
+        text,
+        userMentions,
+        hashtags,
+        images,
+        urls,
+        replyCount,
+        retweetCount,
+        favoriteCount
+      }: GQL.INewtweetOnMutationArguments
+    ) => {
+      const tweet = await Tweet.create({
+        timestamp,
+        hour,
+        screenName,
+        tweetId,
+        isRetweet,
+        isReplyTo,
+        text,
+        userMentions,
+        hashtags,
+        images,
+        urls,
+        replyCount,
+        retweetCount,
+        favoriteCount
+      })
+      await tweet.save()
       return true
     }
   }
