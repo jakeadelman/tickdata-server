@@ -18,7 +18,46 @@ const newQuoteQuery = `
           askSize: $askSize
         ) 
       }
-    `;
+    `
+
+const newTweetQuery = `
+      mutation newtweet(
+        $timestamp: String!
+        $hour: String!
+        $screenName: String!
+        $tweetId: String!
+        $isRetweet: Boolean!
+        $isPinned: Boolean!
+        $isReplyTo: Boolean!
+        $text: String!
+        $userMentions: String!
+        $hashtags: String!
+        $images: String!
+        $urls: String!
+        $replyCount: Int!
+        $retweetCount: Int!
+        $favoriteCount: Int!
+
+      ) {
+        newtweet(
+          timestamp: $timestamp
+          hour: $hour
+          screenName: $screenName
+          tweetId: $tweetId
+          isRetweet: $isRetweet
+          isPinned: $isPinned
+          isReplyTo: $isReplyTo
+          text: $text
+          userMentions: $userMentions
+          hashtags: $hashtags
+          images: $images
+          urls: $urls
+          replyCount: $replyCount
+          retweetCount: $retweetCount
+          favoriteCount: $favoriteCount
+        ) 
+      }
+    `
 
 const newTickQuery = `
     mutation newtick(
@@ -42,7 +81,7 @@ const newTickQuery = `
         trdMatchID: $trdMatchID
       )
       }
-    `;
+    `
 
 const newChatMsgQuery = `
       mutation newchatmsg(
@@ -89,4 +128,4 @@ const newBitfinexTickQuery = `
 
 `
 
-export { newChatMsgQuery, newQuoteQuery, newTickQuery, newBitfinexTickQuery };
+export {newChatMsgQuery, newQuoteQuery, newTickQuery, newBitfinexTickQuery}
