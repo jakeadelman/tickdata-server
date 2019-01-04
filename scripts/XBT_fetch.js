@@ -37,6 +37,8 @@ ws.on('message', data => {
       }
       let query = newQuoteQuery
 
+      console.log(JSON.stringify({query, variables}))
+
       fetch('http://localhost:4000', {
         method: 'POST',
         headers: {

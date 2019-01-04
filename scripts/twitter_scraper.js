@@ -1,5 +1,6 @@
 import * as twit from 'scrape-twitter'
-import {consoleTestResultHandler} from 'tslint/lib/test'
+import {newTweetQuery} from './db_queries'
+
 const fetch = require('node-fetch')
 const dateFormat = require('dateformat')
 
@@ -10,12 +11,14 @@ const callstream = () => {
   const stream = new twit.TweetStream('bitcoin', 'top' | 'latest', {count: 10})
 
   // test return
-  return stream.on('data', data => {
+  stream.on('data', data => {
     let dat = JSON.stringify(data)
     dat = JSON.parse(dat)
     console.log(dat)
 
-    //usermentions
+    let query = newTweetQuery
+
+    // format userMentions
     let userMentions = JSON.stringify(dat.userMentions)
     let userMentionsParse = JSON.parse(userMentions)
     if (userMentionsParse[0]) {
@@ -23,7 +26,8 @@ const callstream = () => {
     } else {
       userMentions = 'null'
     }
-    //hashtags
+
+    // format hashtags
     let hashtags = JSON.stringify(dat.hashtags)
     let hashtagsParse = JSON.parse(hashtags)
     if (hashtagsParse[0]) {
@@ -31,7 +35,8 @@ const callstream = () => {
     } else {
       hashtags = 'null'
     }
-    //images
+
+    // format imgs
     let images = JSON.stringify(dat.images)
     let imagesParse = JSON.parse(images)
     if (imagesParse[0]) {
@@ -39,7 +44,8 @@ const callstream = () => {
     } else {
       images = 'null'
     }
-    //urls
+
+    // format urls
     let urls = JSON.stringify(dat.urls)
     let urlsParse = JSON.parse(urls)
     if (urlsParse[0]) {
@@ -48,6 +54,7 @@ const callstream = () => {
       urls = 'null'
     }
 
+    // format hour
     let concatHour = dat.time
     let str1 = concatHour.substring(2, 4)
     let str2 = concatHour.substring(5, 7)
@@ -61,54 +68,35 @@ const callstream = () => {
       screenName: dat.screenName,
       tweetId: dat.id,
       isRetweet: dat.isRetweet,
+      isPinned: dat.isPinned,
       isReplyTo: dat.isReplyTo,
+      text: dat.text,
+      userMentions: userMentions,
       hashtags: hashtags,
       images: images,
       urls: urls,
-      userMentions: userMentions,
-      replyCount: dat.replyCount,
-      retweetCount: dat.retweetCount,
-      favoriteCount: dat.favoriteCount
+      replyCount: parseInt(dat.replyCount),
+      retweetCount: parseInt(dat.retweetCount),
+      favoriteCount: parseInt(dat.favoriteCount)
     }
     console.log(variables)
+
+    let temp = JSON.stringify({query, variables})
+    console.log(temp, 'THIS TEMP')
+
+    //send to db
+    fetch('http://localhost:4000', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({query, variables})
+    })
+      .then(r => console.log(r))
+      .catch(e => console.log(e))
   })
 
-  // //return stream data
-  // return stream.on('data', data => {
-  //   //map and format tweet
-  //   data.map(res => {
-  //     //put vars in object
-  //     const variables = {
-  //       timestamp: datetime,
-  //       symbol: res.symbol,
-  //       hour: concatHour,
-  //       bidSize: bidS,
-  //       askPrice: askP,
-  //       askSize: askS
-  //     }
-
-  //     let query = newQuoteQuery
-
-  //     fetch('http://localhost:4000', {
-  //       method: 'POST',
-  //       headers: {
-  //         'Content-Type': 'application/json'
-  //       },
-  //       body: JSON.stringify({query, variables})
-  //     })
-  //       .then(r =>
-  //         console.log(
-  //           r.json().then(r => {
-  //             const re = r
-  //             console.log(re)
-  //           })
-  //         )
-  //       )
-  //       .catch(e => console.log(e))
-  //   })
-
-  //   //End
-  // })
+  return console.log('ok')
 }
 
 setInterval(callstream, 10000)
