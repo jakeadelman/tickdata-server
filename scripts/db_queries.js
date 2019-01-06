@@ -128,4 +128,25 @@ const newBitfinexTickQuery = `
 
 `
 
-export {newChatMsgQuery, newQuoteQuery, newTickQuery, newBitfinexTickQuery}
+const searchTweet = `
+  query tweet(
+    $hour: String!,
+    $tweetId: String!
+    { 
+      tweets(
+        hour: $hour,
+        tweetId: $tweetId
+      ){
+        hour
+      }
+  }
+`
+
+export {
+  newChatMsgQuery,
+  newQuoteQuery,
+  newTickQuery,
+  newBitfinexTickQuery,
+  newTweetQuery,
+  searchTweet
+}

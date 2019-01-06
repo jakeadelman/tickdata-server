@@ -47,6 +47,7 @@
     "get-chat": "babel-node scripts/get_chat",
     "bitfinex-fetch": "babel-node scripts/bitfinex_fetch",
     "okex-fetch": "babel-node scripts/okex_fetch",
-    "scrape-twitter": "babel-node scripts/twitter_scraper.js"
+    "twit-word": "babel-node scripts/twitter/twit_word.js",
+    "twit-user": "babel-node scripts/twitter/twit_user.js"
   }
 }

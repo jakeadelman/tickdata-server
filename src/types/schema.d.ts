@@ -81,7 +81,7 @@ export namespace GQL {
     timestamp?: string | null
     hour: string
     screenName?: string | null
-    id?: string | null
+    tweetId?: string | null
     isRetweet?: boolean | null
     isPinned?: boolean | null
     isReplyTo?: boolean | null

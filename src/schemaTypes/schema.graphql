@@ -43,7 +43,7 @@ type Query {
     timestamp: String
     hour: String!
     screenName: String
-    id: String
+    tweetId: String
     isRetweet: Boolean
     isPinned: Boolean
     isReplyTo: Boolean

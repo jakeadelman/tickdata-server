@@ -76,9 +76,9 @@ export const resolvers: ResolverMap = {
       console.log(t[0])
       return t
     },
-    tweet: async (_, {hour}: GQL.ITweetOnQueryArguments) => {
+    tweet: async (_, {hour, tweetId}: GQL.ITweetOnQueryArguments) => {
       const t = await Tweet.find({
-        where: {hour: hour},
+        where: {hour: hour, tweetId: tweetId},
         select: [
           'timestamp',
           'hour',
