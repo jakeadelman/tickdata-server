@@ -2,7 +2,6 @@ import * as twit from 'scrape-twitter'
 import {searchTweet, newTweetQuery} from '../db_queries'
 
 const fetch = require('node-fetch')
-const dateFormat = require('dateformat')
 
 let word = 'bitcoin'
 let me = 'jasond85658576'

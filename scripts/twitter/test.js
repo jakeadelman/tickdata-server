@@ -1,24 +1,32 @@
 import * as twit from 'scrape-twitter'
-import {searchTweet, newTweetQuery} from '../db_queries'
 
 const fetch = require('node-fetch')
-
-let word = 'bitcoin'
-let me = 'jasond85658576'
 
 const searchTweet = `
 query tweet(
   $hour: String!,
   $tweetId: String!
   { 
-    tweets(
+    tweet(
       hour: $hour,
       tweetId: $tweetId
     ){
       hour
+      tweetId
     }
 }
 `
+
+const searchT = `
+   query tweets($hour: String!, $tweetId: String!){
+    tweet(hour: $hour, tweetId: $tweetId){
+      hour
+      tweetId
+    }
+  }
+
+`
+
 const searchVars = {
   hour: '19010520',
   tweetId: '1081655101247442946'
@@ -30,10 +38,18 @@ fetch('http://localhost:4000', {
   headers: {
     'Content-Type': 'application/json'
   },
-  body: JSON.stringify({searchTweet, searchVars})
+  body: JSON.stringify({query: searchT, variables: searchVars})
 })
+  .then(
+    r => r.json()
+    // console.log(r)
+    // console.log(r.status, 'THIS STATUS')
+    // let re = r
+    // re.json()
+    //   .then(r => console.log(r))
+    //   .catch(err => console.log(err))
+  )
   .then(r => {
-    console.log(r)
-    console.log(r.status, 'THIS STATUS')
+    return console.log(r.data)
   })
   .catch(err => console.log(err))

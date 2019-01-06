@@ -7,6 +7,14 @@ import {ChatMsg} from './entity/ChatMsg'
 import {BitfinexTick} from './entity/BitfinexTick'
 import {Tweet} from './entity/Tweet'
 
+/*
+  Queries
+  quote(hour, symbol): quote
+  tick(hour, symbol): tick
+
+
+*/
+
 export const resolvers: ResolverMap = {
   Query: {
     hello: (_, {name}: GQL.IHelloOnQueryArguments) =>
@@ -93,7 +101,8 @@ export const resolvers: ResolverMap = {
           'urls',
           'replyCount',
           'retweetCount',
-          'favoriteCount'
+          'favoriteCount',
+          'searchTerm'
         ]
       })
       return t
@@ -223,7 +232,8 @@ export const resolvers: ResolverMap = {
         urls,
         replyCount,
         retweetCount,
-        favoriteCount
+        favoriteCount,
+        searchTerm
       }: GQL.INewtweetOnMutationArguments
     ) => {
       const tweet = await Tweet.create({
@@ -241,10 +251,32 @@ export const resolvers: ResolverMap = {
         urls,
         replyCount,
         retweetCount,
-        favoriteCount
+        favoriteCount,
+        searchTerm
       })
       await tweet.save()
       return true
+    },
+    updatetweet: async (
+      _,
+      {
+        hour,
+        tweetId,
+        replyCount,
+        retweetCount,
+        favoriteCount
+      }: GQL.IUpdatetweetOnMutationArguments
+    ) => {
+      let newT = await Tweet.findOne({hour: hour, tweetId: tweetId})
+      if (newT) {
+        newT.replyCount = replyCount
+        newT.retweetCount = retweetCount
+        newT.favoriteCount = favoriteCount
+        await newT.save()
+        return true
+      } else {
+        return false
+      }
     }
   }
 }

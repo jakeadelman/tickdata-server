@@ -1,23 +1,19 @@
 import * as twit from 'scrape-twitter'
-import {newTweetQuery} from '../db_queries'
+import {newTweetQuery, searchT} from '../db_queries'
 
 const fetch = require('node-fetch')
-const dateFormat = require('dateformat')
-
-let word = 'bitcoin'
-let me = 'jasond85658576'
 
 const wordStream = word => {
   // create stream
-  const stream = new twit.TweetStream('bitcoin', 'top' | 'latest', {count: 10})
+  const stream = new twit.TweetStream(word, 'top' | 'latest', {count: 25})
   stream.on('error', err => console.log(err))
   // test return
   stream.on('data', data => {
-    console.log(data)
     let dat = JSON.stringify(data)
     dat = JSON.parse(dat)
 
     let query = newTweetQuery
+    let searchTweetQuery = searchT
 
     // format userMentions
     let userMentions = JSON.stringify(dat.userMentions)
@@ -78,27 +74,81 @@ const wordStream = word => {
       urls: urls,
       replyCount: parseInt(dat.replyCount),
       retweetCount: parseInt(dat.retweetCount),
-      favoriteCount: parseInt(dat.favoriteCount)
+      favoriteCount: parseInt(dat.favoriteCount),
+      searchTerm: word
     }
 
+    let searchTweetVars = {
+      hour: concatHour,
+      tweetId: dat.id
+    }
+
+    //check if tweet exists in db
+
     //send to db
-    fetch('http://localhost:4000', {
+    return fetch('http://localhost:4000', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({query, variables})
+      body: JSON.stringify({
+        query: searchTweetQuery,
+        variables: searchTweetVars
+      })
     })
+      .then(r => r.json())
       .then(r => {
-        r.json().then(r => {
-          const re = r
-          console.log(re)
-        })
+        let dati = JSON.parse(JSON.stringify(r.data))
+        dati = dati.tweet
+
+        if (dati[0]) {
+          console.log('replacing ', dati[0].tweetId)
+          //send to db
+          fetch('http://localhost:4000', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({query: query, variables: variables})
+          })
+            .then(r => {
+              console.log('adding new tweet')
+              r.json().then(r => {
+                const re = r
+                console.log(re)
+              })
+            })
+            .catch(e => console.log(e))
+        } else {
+          //send to db
+          fetch('http://localhost:4000', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({query: query, variables: variables})
+          })
+            .then(r => {
+              console.log('adding new tweet')
+              r.json().then(r => {
+                const re = r
+                console.log(re)
+              })
+            })
+            .catch(e => console.log(e))
+        }
       })
       .catch(e => console.log(e))
   })
-
-  return console.log('ok')
 }
 
-setInterval(wordStream, 3000)
+const cycleList = () => {
+  let wordList = ['bitcoin', 'cryptocurrency', '$btc', '$xrp']
+
+  for (var i = 0; i < wordList.length; i++) {
+    console.log('fetching ', wordList[i])
+    wordStream(wordList[i])
+  }
+}
+
+setInterval(cycleList, 300000)

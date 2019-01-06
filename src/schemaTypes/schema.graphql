@@ -55,11 +55,39 @@ type Query {
     replyCount: Int
     retweetCount: Int
     favoriteCount: Int
+    searchTerm: String
+  ): [Tweet]
+
+  hourlytweet(
+    timestamp: String
+    hour: String!
+    screenName: String
+    tweetId: String
+    isRetweet: Boolean
+    isPinned: Boolean
+    isReplyTo: Boolean
+    text: String
+    userMentions: String
+    hashtags: String
+    images: String
+    urls: String
+    replyCount: Int
+    retweetCount: Int
+    favoriteCount: Int
+    searchTerm: String
   ): [Tweet]
 }
 
 type Mutation {
   register(email: String!, password: String!): Boolean
+
+  updatetweet(
+    hour: String!
+    tweetId: String!
+    replyCount: Int!
+    retweetCount: Int!
+    favoriteCount: Int!
+  ): Boolean
 
   newquote(
     timestamp: String!
@@ -119,6 +147,7 @@ type Mutation {
     replyCount: Int!
     retweetCount: Int!
     favoriteCount: Int!
+    searchTerm: String!
   ): Boolean
 }
 
@@ -182,4 +211,5 @@ type Tweet {
   replyCount: Int!
   retweetCount: Int!
   favoriteCount: Int!
+  searchTerm: String!
 }

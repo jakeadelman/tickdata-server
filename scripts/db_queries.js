@@ -37,6 +37,7 @@ const newTweetQuery = `
         $replyCount: Int!
         $retweetCount: Int!
         $favoriteCount: Int!
+        $searchTerm: String!
 
       ) {
         newtweet(
@@ -55,6 +56,7 @@ const newTweetQuery = `
           replyCount: $replyCount
           retweetCount: $retweetCount
           favoriteCount: $favoriteCount
+          searchTerm: $searchTerm
         ) 
       }
     `
@@ -128,18 +130,29 @@ const newBitfinexTickQuery = `
 
 `
 
-const searchTweet = `
-  query tweet(
-    $hour: String!,
-    $tweetId: String!
-    { 
-      tweets(
-        hour: $hour,
-        tweetId: $tweetId
-      ){
-        hour
-      }
+const searchT = `
+   query tweets($hour: String!, $tweetId: String!){
+    tweet(hour: $hour, tweetId: $tweetId){
+      hour
+      tweetId
+    }
   }
+
+`
+
+const searchTweet = `
+query tweets(
+  $hour: String!,
+  $tweetId: String!
+  { 
+    tweet(
+      hour: $hour,
+      tweetId: $tweetId
+    ){
+      hour
+      tweetId
+    }
+}
 `
 
 export {
@@ -148,5 +161,6 @@ export {
   newTickQuery,
   newBitfinexTickQuery,
   newTweetQuery,
-  searchTweet
+  searchTweet,
+  searchT
 }

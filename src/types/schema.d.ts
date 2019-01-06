@@ -93,6 +93,7 @@ export namespace GQL {
     replyCount?: number | null
     retweetCount?: number | null
     favoriteCount?: number | null
+    searchTerm?: string | null
   }
 
   interface IQuote {
@@ -160,11 +161,13 @@ export namespace GQL {
     replyCount: number
     retweetCount: number
     favoriteCount: number
+    searchTerm: string
   }
 
   interface IMutation {
     __typename: 'Mutation'
     register: boolean | null
+    updatetweet: boolean | null
     newquote: boolean | null
     newtick: boolean | null
     newchatmsg: boolean | null
@@ -175,6 +178,14 @@ export namespace GQL {
   interface IRegisterOnMutationArguments {
     email: string
     password: string
+  }
+
+  interface IUpdatetweetOnMutationArguments {
+    hour: string
+    tweetId: string
+    replyCount: number
+    retweetCount: number
+    favoriteCount: number
   }
 
   interface INewquoteOnMutationArguments {
@@ -235,6 +246,7 @@ export namespace GQL {
     replyCount: number
     retweetCount: number
     favoriteCount: number
+    searchTerm: string
   }
 }
 

@@ -48,6 +48,7 @@
     "bitfinex-fetch": "babel-node scripts/bitfinex_fetch",
     "okex-fetch": "babel-node scripts/okex_fetch",
     "twit-word": "babel-node scripts/twitter/twit_word.js",
-    "twit-user": "babel-node scripts/twitter/twit_user.js"
+    "twit-user": "babel-node scripts/twitter/twit_user.js",
+    "twit-test": "babel-node scripts/twitter/test.js"
   }
 }
