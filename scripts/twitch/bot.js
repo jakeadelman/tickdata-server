@@ -32,6 +32,7 @@ function onMessageHandler(target, context, msg, self) {
   // Remove whitespace from chat message
   const commandName = msg.trim()
 
+
   // If the command is known, let's execute it
   if (commandName === '!sentiment') {
     client.say(target, `chat is bullish.`)
@@ -50,15 +51,16 @@ function onMessageHandler(target, context, msg, self) {
         hour: concatHour.toString(),
         text: commandName.toString(),
         emoji: context['emotes-raw'].toString(),
-        channelName: 'cryptotraderstv'
+        channelName: target.toString()
       }
+      
     } else {
       newTwitchVars = {
         timestamp: isoDate.toString(),
         hour: concatHour.toString(),
         text: commandName.toString(),
         emoji: 'null',
-        channelName: 'cryptotraderstv'
+        channelName: target.toString()
       }
     }
     console.log(newTwitchVars)
@@ -118,8 +120,6 @@ const checkCheck = (listy, commandy) => {
   let yesOrNo
   for (let i = 0; i < listy.length; i++) {
     let val = listy[i]
-
-    console.log(val)
     if (commandy.includes(val)) {
       yesOrNo = true
     } else {
