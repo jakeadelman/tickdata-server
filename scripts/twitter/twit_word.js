@@ -123,12 +123,8 @@ const wordStream = word => {
             })
           })
             .then(r => {
-              console.log('updating tweet ', dat.id)
               r.json()
-                .then(r => {
-                  const re = r
-                  console.log(re, ' new reply count.. ', dat.replyCount)
-                })
+                .then(r => r)
                 .catch(err => console.log(err))
             })
             .catch(e => console.log(e))
@@ -142,11 +138,9 @@ const wordStream = word => {
             body: JSON.stringify({query: query, variables: variables})
           })
             .then(r => {
-              console.log('adding new tweet')
-              r.json().then(r => {
-                const re = r
-                console.log(re)
-              })
+              r.json()
+                .then(r => r)
+                .catch(e => console.log(e))
             })
             .catch(e => console.log(e))
         }
@@ -164,4 +158,4 @@ const cycleList = () => {
   }
 }
 
-setInterval(cycleList, 3000)
+setInterval(cycleList, 300000)

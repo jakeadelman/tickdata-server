@@ -1,10 +1,7 @@
 import * as twit from 'scrape-twitter'
-import {searchTweet, newTweetQuery} from '../db_queries'
+import {searchT, newTweetQuery, updateTweet} from '../db_queries'
 
 const fetch = require('node-fetch')
-
-let word = 'bitcoin'
-let me = 'jasond85658576'
 
 const listStream = () => {
   // create stream
@@ -70,56 +67,75 @@ const listStream = () => {
       urls: urls,
       replyCount: parseInt(dat.replyCount),
       retweetCount: parseInt(dat.retweetCount),
-      favoriteCount: parseInt(dat.favoriteCount)
+      favoriteCount: parseInt(dat.favoriteCount),
+      searchTerm: 'CT'
     }
 
-    let searchTweetQuery = searchTweet
-    let searchVars = {
+    let searchTweetQuery = searchT
+    let searchTweetVars = {
       hour: concatHour,
       tweetId: dat.id
     }
 
-    //send to db
-    fetch('http://localhost:4000', {
+    let updateTweetQuery = updateTweet
+    let updateTweetVars = {
+      hour: concatHour,
+      tweetId: dat.id,
+      replyCount: parseInt(dat.replyCount),
+      retweetCount: parseInt(dat.retweetCount),
+      favoriteCount: parseInt(dat.favoriteCount)
+    }
+
+    ///send to db
+    return fetch('http://localhost:4000', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({searchTweetQuery, searchVars})
+      body: JSON.stringify({
+        query: searchTweetQuery,
+        variables: searchTweetVars
+      })
     })
+      .then(r => r.json())
       .then(r => {
-        console.log(r.headers, 'THIS HEADERS')
-        // get status
-        let re = JSON.parse(JSON.stringify(r))
-        console.log(re)
-        re.json()
-          .then(r => console.log(r))
-          .catch(err => console.log(err))
+        let dati = JSON.parse(JSON.stringify(r.data))
+        dati = dati.tweet
 
-        // hola
-        let status = r.status
-        console.log(status)
-        //if status is 500 add tweet to db | else pass
-        if (status === 500) {
-          console.log('adding ', variables.tweetId, ' to db..')
+        if (dati[0]) {
           //send to db
           fetch('http://localhost:4000', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json'
             },
-            body: JSON.stringify({query, variables})
+            body: JSON.stringify({
+              query: updateTweetQuery,
+              variables: updateTweetVars
+            })
           })
             .then(r => {
-              r.json().then(r => {
-                const re = r
-                console.log(re)
-              })
+              return r
+                .json()
+                .then(r => r)
+                .catch(err => console.log(err))
             })
             .catch(e => console.log(e))
         } else {
-          console.log('already added ', variables.tweetId)
-          return null
+          //send to db
+          fetch('http://localhost:4000', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({query: query, variables: variables})
+          })
+            .then(r => {
+              r.json()
+                .then(r => r)
+                .catch(e => console.log(r))
+            })
+            .catch(e => console.log(e))
         }
       })
       .catch(e => console.log(e))
@@ -127,4 +143,4 @@ const listStream = () => {
 }
 
 // setInterval(wordStream(word), 300000)
-setInterval(listStream, 3000)
+setInterval(listStream, 300000)

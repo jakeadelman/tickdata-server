@@ -29,6 +29,7 @@ export namespace GQL {
     bitfinextick: Array<IBitfinexTick | null> | null
     tweet: Array<ITweet | null> | null
     hourlytweet: Array<ITweet | null> | null
+    twitchmsg: Array<ITwitchMsg | null> | null
   }
 
   interface IHelloOnQueryArguments {
@@ -101,6 +102,10 @@ export namespace GQL {
     hour: string
   }
 
+  interface ITwitchmsgOnQueryArguments {
+    hour: string
+  }
+
   interface IQuote {
     __typename: 'Quote'
     id: number
@@ -169,6 +174,15 @@ export namespace GQL {
     searchTerm: string
   }
 
+  interface ITwitchMsg {
+    __typename: 'TwitchMsg'
+    timestamp: string
+    hour: string
+    text: string
+    emoji: string
+    channelName: string
+  }
+
   interface IMutation {
     __typename: 'Mutation'
     register: boolean | null
@@ -178,6 +192,7 @@ export namespace GQL {
     newchatmsg: boolean | null
     newbitfinextick: boolean | null
     newtweet: boolean | null
+    newtwitchmsg: boolean | null
   }
 
   interface IRegisterOnMutationArguments {
@@ -252,6 +267,14 @@ export namespace GQL {
     retweetCount: number
     favoriteCount: number
     searchTerm: string
+  }
+
+  interface INewtwitchmsgOnMutationArguments {
+    timestamp: string
+    hour: string
+    text: string
+    emoji: string
+    channelName: string
   }
 }
 

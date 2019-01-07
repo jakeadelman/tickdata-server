@@ -59,6 +59,7 @@ type Query {
   ): [Tweet]
 
   hourlytweet(hour: String!): [Tweet]
+  twitchmsg(hour: String!): [TwitchMsg]
 }
 
 type Mutation {
@@ -132,6 +133,14 @@ type Mutation {
     favoriteCount: Int!
     searchTerm: String!
   ): Boolean
+
+  newtwitchmsg(
+    timestamp: String!
+    hour: String!
+    text: String!
+    emoji: String!
+    channelName: String!
+  ): Boolean
 }
 
 type Quote {
@@ -195,4 +204,12 @@ type Tweet {
   retweetCount: Int!
   favoriteCount: Int!
   searchTerm: String!
+}
+
+type TwitchMsg {
+  timestamp: String!
+  hour: String!
+  text: String!
+  emoji: String!
+  channelName: String!
 }

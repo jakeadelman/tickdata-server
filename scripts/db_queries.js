@@ -147,6 +147,12 @@ const updateTweet = `
   }
 `
 
+const newTwitchMsg = `
+  mutation newtwitchmsg($timestamp: String!, $hour: String!, $text: String!, $emoji: String!, $channelName: String!){
+    newtwitchmsg(timestamp: $timestamp, hour: $hour, text: $text, emoji: $emoji, channelName: $channelName)
+  }
+`
+
 export {
   newChatMsgQuery,
   newQuoteQuery,
@@ -154,5 +160,6 @@ export {
   newBitfinexTickQuery,
   newTweetQuery,
   updateTweet,
-  searchT
+  searchT,
+  newTwitchMsg
 }

@@ -6,6 +6,7 @@ import {Tick} from './entity/Tick'
 import {ChatMsg} from './entity/ChatMsg'
 import {BitfinexTick} from './entity/BitfinexTick'
 import {Tweet} from './entity/Tweet'
+import {TwitchMsg} from './entity/TwitchMsg'
 
 /*
 
@@ -16,6 +17,7 @@ import {Tweet} from './entity/Tweet'
   bitfinextick(hour): bitfinextick
   tweet(hour,tweetId): tweet
   hourlytweet(hour): tweet[]
+  twitchmsg(hour): twitchmsg[]
 
   || Mutations ||
   newquote(all): boolean
@@ -139,6 +141,13 @@ export const resolvers: ResolverMap = {
           'favoriteCount',
           'searchTerm'
         ]
+      })
+      return t
+    },
+    twitchmsg: async (_, {hour}: GQL.ITwitchmsgOnQueryArguments) => {
+      const t = await TwitchMsg.find({
+        where: {hour: hour},
+        select: ['timestamp', 'hour', 'text', 'emoji', 'channelName']
       })
       return t
     }
@@ -312,6 +321,26 @@ export const resolvers: ResolverMap = {
       } else {
         return false
       }
+    },
+    newtwitchmsg: async (
+      _,
+      {
+        timestamp,
+        hour,
+        text,
+        emoji,
+        channelName
+      }: GQL.INewtwitchmsgOnMutationArguments
+    ) => {
+      let newM = await TwitchMsg.create({
+        timestamp,
+        hour,
+        text,
+        emoji,
+        channelName
+      })
+      await newM.save()
+      return true
     }
   }
 }
