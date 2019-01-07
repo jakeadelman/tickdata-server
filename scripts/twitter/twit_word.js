@@ -1,5 +1,5 @@
 import * as twit from 'scrape-twitter'
-import {newTweetQuery, searchT} from '../db_queries'
+import {newTweetQuery, searchT, updateTweet} from '../db_queries'
 
 const fetch = require('node-fetch')
 
@@ -83,6 +83,15 @@ const wordStream = word => {
       tweetId: dat.id
     }
 
+    let updateTweetQuery = updateTweet
+    let updateTweetVars = {
+      hour: concatHour,
+      tweetId: dat.id,
+      replyCount: parseInt(dat.replyCount),
+      retweetCount: parseInt(dat.retweetCount),
+      favoriteCount: parseInt(dat.favoriteCount)
+    }
+
     //check if tweet exists in db
 
     //send to db
@@ -102,21 +111,25 @@ const wordStream = word => {
         dati = dati.tweet
 
         if (dati[0]) {
-          console.log('replacing ', dati[0].tweetId)
           //send to db
           fetch('http://localhost:4000', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json'
             },
-            body: JSON.stringify({query: query, variables: variables})
+            body: JSON.stringify({
+              query: updateTweetQuery,
+              variables: updateTweetVars
+            })
           })
             .then(r => {
-              console.log('adding new tweet')
-              r.json().then(r => {
-                const re = r
-                console.log(re)
-              })
+              console.log('updating tweet ', dat.id)
+              r.json()
+                .then(r => {
+                  const re = r
+                  console.log(re, ' new reply count.. ', dat.replyCount)
+                })
+                .catch(err => console.log(err))
             })
             .catch(e => console.log(e))
         } else {
@@ -151,4 +164,4 @@ const cycleList = () => {
   }
 }
 
-setInterval(cycleList, 300000)
+setInterval(cycleList, 3000)

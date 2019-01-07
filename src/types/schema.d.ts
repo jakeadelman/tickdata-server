@@ -28,6 +28,7 @@ export namespace GQL {
     chatmsg: Array<IChatMsg | null> | null
     bitfinextick: Array<IBitfinexTick | null> | null
     tweet: Array<ITweet | null> | null
+    hourlytweet: Array<ITweet | null> | null
   }
 
   interface IHelloOnQueryArguments {
@@ -94,6 +95,10 @@ export namespace GQL {
     retweetCount?: number | null
     favoriteCount?: number | null
     searchTerm?: string | null
+  }
+
+  interface IHourlytweetOnQueryArguments {
+    hour: string
   }
 
   interface IQuote {

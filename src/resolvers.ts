@@ -8,10 +8,22 @@ import {BitfinexTick} from './entity/BitfinexTick'
 import {Tweet} from './entity/Tweet'
 
 /*
-  Queries
+
+  || Queries ||
   quote(hour, symbol): quote
   tick(hour, symbol): tick
+  chatmsg(hour, channelID): chatmsg
+  bitfinextick(hour): bitfinextick
+  tweet(hour,tweetId): tweet
+  hourlytweet(hour): tweet[]
 
+  || Mutations ||
+  newquote(all): boolean
+  newtick(all): boolean
+  newchatmsg(all): boolean
+  newbitfinextick(all): boolean
+  newtweet(all): boolean
+  updatetweet(hour, tweetId, replyCount, retweetCount, favoriteCount): boolean
 
 */
 
@@ -87,6 +99,29 @@ export const resolvers: ResolverMap = {
     tweet: async (_, {hour, tweetId}: GQL.ITweetOnQueryArguments) => {
       const t = await Tweet.find({
         where: {hour: hour, tweetId: tweetId},
+        select: [
+          'timestamp',
+          'hour',
+          'screenName',
+          'tweetId',
+          'isRetweet',
+          'isReplyTo',
+          'text',
+          'userMentions',
+          'hashtags',
+          'images',
+          'urls',
+          'replyCount',
+          'retweetCount',
+          'favoriteCount',
+          'searchTerm'
+        ]
+      })
+      return t
+    },
+    hourlytweet: async (_, {hour}: GQL.IHourlytweetOnQueryArguments) => {
+      const t = await Tweet.find({
+        where: {hour: hour},
         select: [
           'timestamp',
           'hour',

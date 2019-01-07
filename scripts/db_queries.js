@@ -140,19 +140,11 @@ const searchT = `
 
 `
 
-const searchTweet = `
-query tweets(
-  $hour: String!,
-  $tweetId: String!
-  { 
-    tweet(
-      hour: $hour,
-      tweetId: $tweetId
-    ){
-      hour
-      tweetId
-    }
-}
+const updateTweet = `
+  mutation updatetweet(
+    $hour: String!, $tweetId: String!, $replyCount: Int!, $retweetCount: Int!, $favoriteCount: Int!){
+    updatetweet(hour: $hour, tweetId: $tweetId, replyCount: $replyCount, retweetCount: $retweetCount, favoriteCount: $favoriteCount)
+  }
 `
 
 export {
@@ -161,6 +153,6 @@ export {
   newTickQuery,
   newBitfinexTickQuery,
   newTweetQuery,
-  searchTweet,
+  updateTweet,
   searchT
 }

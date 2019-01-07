@@ -58,24 +58,7 @@ type Query {
     searchTerm: String
   ): [Tweet]
 
-  hourlytweet(
-    timestamp: String
-    hour: String!
-    screenName: String
-    tweetId: String
-    isRetweet: Boolean
-    isPinned: Boolean
-    isReplyTo: Boolean
-    text: String
-    userMentions: String
-    hashtags: String
-    images: String
-    urls: String
-    replyCount: Int
-    retweetCount: Int
-    favoriteCount: Int
-    searchTerm: String
-  ): [Tweet]
+  hourlytweet(hour: String!): [Tweet]
 }
 
 type Mutation {
