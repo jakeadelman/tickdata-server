@@ -8,9 +8,14 @@ const dateFormat = require('dateformat')
 const opts = {
   identity: {
     username: 'intelli_sentiment_bot',
-    password: 'oauth:xh23z63wpddafj5d6hkdnlz0nccrhg'
+    password: 'oauth:t2u0prvvff5h21fiz0aee4zrmpian0'
   },
-  channels: ['cryptotraderstv', 'cryptointelligencetv', 'cryptoworldnews']
+  channels: [
+    'cryptotraderstv',
+    'cryptoworldnews',
+    'cryptointelligencetv',
+    'tradetomoon'
+  ]
 }
 
 // Create a client with our options
@@ -32,61 +37,60 @@ function onMessageHandler(target, context, msg, self) {
   // Remove whitespace from chat message
   const commandName = msg.trim()
 
-
   // If the command is known, let's execute it
-  if (commandName === '!sentiment') {
-    client.say(target, `chat is bullish.`)
-    console.log(`* Executed ${commandName} command`)
-  } else if (commandName === '!sentiment_twitter') {
-    client.say(target, `twitter is bullish. 64% percent bullish`)
-  } else {
-    let now = new Date()
-    let isoDate = dateFormat(now, 'isoDateTime')
-    let concatHour = dateFormat(now, 'yymmddHH')
+  // if (commandName === 'moon') {
+  //   client.say(target, `did someone say moon`)
+  //   console.log(`* Executed ${commandName} command`)
+  // } else if (commandName.includes('moon')) {
+  //   client.say(target, `did someone say moon?`)
+  //   console.log('executed COMMAND')
+  // } else {
+  let now = new Date()
+  let isoDate = dateFormat(now, 'isoDateTime')
+  let concatHour = dateFormat(now, 'yymmddHH')
 
-    let newTwitchVars = {}
-    if (context['emotes-raw']) {
-      newTwitchVars = {
-        timestamp: isoDate.toString(),
-        hour: concatHour.toString(),
-        text: commandName.toString(),
-        emoji: context['emotes-raw'].toString(),
-        channelName: target.toString()
-      }
-      
-    } else {
-      newTwitchVars = {
-        timestamp: isoDate.toString(),
-        hour: concatHour.toString(),
-        text: commandName.toString(),
-        emoji: 'null',
-        channelName: target.toString()
-      }
+  let newTwitchVars = {}
+  if (context['emotes-raw']) {
+    newTwitchVars = {
+      timestamp: isoDate.toString(),
+      hour: concatHour.toString(),
+      text: commandName.toString(),
+      emoji: context['emotes-raw'].toString(),
+      channelName: target.toString()
     }
-    console.log(newTwitchVars)
-
-    if (isUser(context) === true) {
-      console.log('didnt add msg is bot user')
-      return
-    } else if (doesItInclude(commandName) === true) {
-      console.log('didnt add msg is bot msg')
-      return
-    } else {
-      return fetch('http://localhost:4000', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          query: newTwitchMsg,
-          variables: newTwitchVars
-        })
-      })
-        .then(r => r.json())
-        .then(r => console.log(r, ' added msg'))
-        .catch(e => console.log(e))
+  } else {
+    newTwitchVars = {
+      timestamp: isoDate.toString(),
+      hour: concatHour.toString(),
+      text: commandName.toString(),
+      emoji: 'null',
+      channelName: target.toString()
     }
   }
+  console.log(newTwitchVars)
+
+  if (isUser(context) === true) {
+    console.log('didnt add msg is bot user')
+    return
+  } else if (doesItInclude(commandName) === true) {
+    console.log('didnt add msg is bot msg')
+    return
+  } else {
+    return fetch('http://localhost:4000', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        query: newTwitchMsg,
+        variables: newTwitchVars
+      })
+    })
+      .then(r => r.json())
+      .then(r => console.log(r, ' added msg'))
+      .catch(e => console.log(e))
+  }
+  //}
 }
 
 // Called every time the bot connects to Twitch chat
