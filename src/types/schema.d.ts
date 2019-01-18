@@ -81,6 +81,7 @@ export namespace GQL {
 
   interface ITweetOnQueryArguments {
     timestamp?: string | null
+    currHour?: string | null
     hour: string
     screenName?: string | null
     tweetId?: string | null
@@ -100,6 +101,7 @@ export namespace GQL {
 
   interface IHourlytweetOnQueryArguments {
     hour: string
+    currHour: string
   }
 
   interface ITwitchmsgOnQueryArguments {
@@ -157,6 +159,7 @@ export namespace GQL {
   interface ITweet {
     __typename: 'Tweet'
     timestamp: string
+    currHour: string
     hour: string
     screenName: string
     tweetId: string
@@ -252,6 +255,7 @@ export namespace GQL {
 
   interface INewtweetOnMutationArguments {
     timestamp: string
+    currHour: string
     hour: string
     screenName: string
     tweetId: string

@@ -5,6 +5,7 @@ export class Tweet extends BaseEntity {
   @PrimaryGeneratedColumn() id: number
 
   @Column('text') timestamp: string
+  @Column('text') currHour: string
   @Column('text') hour: string
   @Column('text') screenName: string
   @Column('text') tweetId: string

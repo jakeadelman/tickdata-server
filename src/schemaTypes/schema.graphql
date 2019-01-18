@@ -41,6 +41,7 @@ type Query {
 
   tweet(
     timestamp: String
+    currHour: String
     hour: String!
     screenName: String
     tweetId: String
@@ -58,7 +59,7 @@ type Query {
     searchTerm: String
   ): [Tweet]
 
-  hourlytweet(hour: String!): [Tweet]
+  hourlytweet(hour: String!, currHour: String!): [Tweet]
   twitchmsg(hour: String!): [TwitchMsg]
 }
 
@@ -117,6 +118,7 @@ type Mutation {
 
   newtweet(
     timestamp: String!
+    currHour: String!
     hour: String!
     screenName: String!
     tweetId: String!
@@ -189,6 +191,7 @@ type BitfinexTick {
 
 type Tweet {
   timestamp: String!
+  currHour: String!
   hour: String!
   screenName: String!
   tweetId: String!

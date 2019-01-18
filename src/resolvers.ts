@@ -103,6 +103,7 @@ export const resolvers: ResolverMap = {
         where: {hour: hour, tweetId: tweetId},
         select: [
           'timestamp',
+          'currHour',
           'hour',
           'screenName',
           'tweetId',
@@ -121,11 +122,15 @@ export const resolvers: ResolverMap = {
       })
       return t
     },
-    hourlytweet: async (_, {hour}: GQL.IHourlytweetOnQueryArguments) => {
+    hourlytweet: async (
+      _,
+      {hour, currHour}: GQL.IHourlytweetOnQueryArguments
+    ) => {
       const t = await Tweet.find({
-        where: {hour: hour},
+        where: {hour: hour, currHour: currHour},
         select: [
           'timestamp',
+          'currHour',
           'hour',
           'screenName',
           'tweetId',
@@ -263,6 +268,7 @@ export const resolvers: ResolverMap = {
       _,
       {
         timestamp,
+        currHour,
         hour,
         screenName,
         tweetId,
@@ -282,6 +288,7 @@ export const resolvers: ResolverMap = {
     ) => {
       const tweet = await Tweet.create({
         timestamp,
+        currHour,
         hour,
         screenName,
         tweetId,

@@ -23,6 +23,7 @@ const newQuoteQuery = `
 const newTweetQuery = `
       mutation newtweet(
         $timestamp: String!
+        $currHour: String!
         $hour: String!
         $screenName: String!
         $tweetId: String!
@@ -42,6 +43,7 @@ const newTweetQuery = `
       ) {
         newtweet(
           timestamp: $timestamp
+          currHour: $currHour
           hour: $hour
           screenName: $screenName
           tweetId: $tweetId

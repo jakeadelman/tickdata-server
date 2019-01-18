@@ -1,5 +1,6 @@
 import * as twit from 'scrape-twitter'
 import {newTweetQuery, searchT, updateTweet} from '../db_queries'
+const dateFormat = require('dateformat')
 
 const fetch = require('node-fetch')
 
@@ -51,6 +52,11 @@ const wordStream = word => {
       urls = 'null'
     }
 
+    //get current time and format to hour
+    let now = new Date()
+    let currHour = dateFormat(now, 'yymmddHH')
+    console.log(currHour)
+
     // format hour
     let concatHour = dat.time
     let str1 = concatHour.substring(2, 4)
@@ -61,6 +67,7 @@ const wordStream = word => {
 
     const variables = {
       timestamp: dat.time,
+      currHour: currHour,
       hour: concatHour,
       screenName: dat.screenName,
       tweetId: dat.id,
@@ -158,4 +165,4 @@ const cycleList = () => {
   }
 }
 
-setInterval(cycleList, 300000)
+setInterval(cycleList, 3000)
