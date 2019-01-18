@@ -100,8 +100,8 @@ export namespace GQL {
   }
 
   interface IHourlytweetOnQueryArguments {
-    hour: string
     currHour: string
+    searchTerm: string
   }
 
   interface ITwitchmsgOnQueryArguments {

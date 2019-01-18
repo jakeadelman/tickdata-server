@@ -45,6 +45,11 @@ const listStream = () => {
     } else {
       urls = 'null'
     }
+
+    //get current time and format to hour
+    let now = new Date()
+    let currHour = dateFormat(now, 'yymmddHH')
+
     // format hour
     let concatHour = dat.time
     let str1 = concatHour.substring(2, 4)
@@ -54,6 +59,7 @@ const listStream = () => {
     concatHour = str1 + str2 + str3 + str4
     const variables = {
       timestamp: dat.time,
+      currHour: currHour,
       hour: concatHour,
       screenName: dat.screenName,
       tweetId: dat.id,

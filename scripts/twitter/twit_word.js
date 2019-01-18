@@ -55,7 +55,6 @@ const wordStream = word => {
     //get current time and format to hour
     let now = new Date()
     let currHour = dateFormat(now, 'yymmddHH')
-    console.log(currHour)
 
     // format hour
     let concatHour = dat.time

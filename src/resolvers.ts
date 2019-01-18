@@ -124,10 +124,10 @@ export const resolvers: ResolverMap = {
     },
     hourlytweet: async (
       _,
-      {hour, currHour}: GQL.IHourlytweetOnQueryArguments
+      {currHour, searchTerm}: GQL.IHourlytweetOnQueryArguments
     ) => {
       const t = await Tweet.find({
-        where: {hour: hour, currHour: currHour},
+        where: {currHour: currHour, searchTerm: searchTerm},
         select: [
           'timestamp',
           'currHour',
