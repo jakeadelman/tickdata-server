@@ -1,5 +1,6 @@
 import * as twit from 'scrape-twitter'
 import {searchT, newTweetQuery, updateTweet} from '../db_queries'
+const dateFormat = require('dateformat')
 
 const fetch = require('node-fetch')
 

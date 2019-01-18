@@ -63,6 +63,7 @@ const wordStream = word => {
     let str3 = concatHour.substring(8, 10)
     let str4 = concatHour.substring(11, 13)
     concatHour = str1 + str2 + str3 + str4
+    console.log(typeof word)
 
     const variables = {
       timestamp: dat.time,
@@ -164,4 +165,4 @@ const cycleList = () => {
   }
 }
 
-setInterval(cycleList, 3000)
+setInterval(cycleList, 300000)
