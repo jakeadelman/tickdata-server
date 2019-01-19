@@ -1,8 +1,35 @@
 import * as twit from 'scrape-twitter'
 import {searchT, newTweetQuery, updateTweet} from '../db_queries'
+const sentiment140 = require('sentiment140')
 const dateFormat = require('dateformat')
 
+let senti = new sentiment140({
+  auth: 'cryptobotting25@gmail.com'
+})
+
 const fetch = require('node-fetch')
+
+const getSent = async variables => {
+  let sentiVars = {
+    text: variables.text,
+    id: variables.tweetId,
+    query: 'crypto'
+  }
+  let arry = []
+  arry.push(sentiVars)
+  let sentiDat = {}
+  sentiDat['data'] = arry
+
+  await setTimeout(function() {
+    senti.sentiment(sentiDat, function(error, result) {
+      if (result) {
+        console.log(JSON.stringify(result))
+      } else if (error) {
+        console.log(JSON.stringify(error))
+      }
+    })
+  }, 1000)
+}
 
 const listStream = () => {
   // create stream
@@ -129,20 +156,24 @@ const listStream = () => {
             })
             .catch(e => console.log(e))
         } else {
+          setTimeout(function() {
+            getSent(variables)
+          }, 1000)
+
           //send to db
-          fetch('http://localhost:4000', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({query: query, variables: variables})
-          })
-            .then(r => {
-              r.json()
-                .then(r => r)
-                .catch(e => console.log(r))
-            })
-            .catch(e => console.log(e))
+          // fetch('http://localhost:4000', {
+          //   method: 'POST',
+          //   headers: {
+          //     'Content-Type': 'application/json'
+          //   },
+          //   body: JSON.stringify({query: query, variables: variables})
+          // })
+          //   .then(r => {
+          //     r.json()
+          //       .then(r => r)
+          //       .catch(e => console.log(r))
+          //   })
+          //   .catch(e => console.log(e))
         }
       })
       .catch(e => console.log(e))
@@ -150,4 +181,4 @@ const listStream = () => {
 }
 
 // setInterval(wordStream(word), 300000)
-setInterval(listStream, 300000)
+setInterval(listStream, 3000)

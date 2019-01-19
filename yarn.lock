@@ -5821,7 +5821,7 @@ request@2.74.0:
     tough-cookie "~2.3.0"
     tunnel-agent "~0.4.1"
 
-request@^2.67.0:
+request@^2.53.0, request@^2.67.0:
   version "2.88.0"
   resolved "https://registry.yarnpkg.com/request/-/request-2.88.0.tgz#9c2fca4f7d35b592efe57c7f0a55e81052124fef"
   integrity sha512-NAqBSrijGLZdM0WZNsInLJpkJokL72XYjUpnB0iwsRgxh7dB6COrHnTBNwN0E+lHDAJzu7kLAkDeY08z2/A0hg==
@@ -5988,6 +5988,15 @@ send@0.16.2:
     on-finished "~2.3.0"
     range-parser "~1.2.0"
     statuses "~1.4.0"
+
+sentiment140@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/sentiment140/-/sentiment140-1.2.0.tgz#f04eebfa5fc8998698fb59eb6ec130bc95ab0614"
+  integrity sha1-8E7r+l/ImYaY+1nrbsEwvJWrBhQ=
+  dependencies:
+    bluebird "^3.4.1"
+    lodash "^4.13.1"
+    request "^2.53.0"
 
 serve-static@1.13.2:
   version "1.13.2"
