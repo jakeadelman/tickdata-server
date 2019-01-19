@@ -189,7 +189,12 @@ const wordStream = word => {
 }
 
 const cycleList = () => {
-  let wordList = ['bitcoin', 'cryptocurrency', '$btc', '$xrp']
+  let wordList = [
+    'bitcoin -airdrop',
+    'cryptocurrency -airdrop',
+    '$btc -filter:links',
+    '$xrp -filter:links'
+  ]
 
   for (var i = 0; i < wordList.length; i++) {
     console.log('fetching ', wordList[i])
