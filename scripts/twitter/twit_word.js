@@ -202,4 +202,4 @@ const cycleList = () => {
   }
 }
 
-setInterval(cycleList, 3000)
+setInterval(cycleList, 300000)
