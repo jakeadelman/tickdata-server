@@ -183,4 +183,4 @@ const listStream = () => {
 }
 
 // setInterval(wordStream(word), 300000)
-setInterval(listStream, 300000)
+setInterval(listStream, 3000)
