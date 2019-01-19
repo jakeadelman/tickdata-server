@@ -56,6 +56,7 @@ type Query {
     replyCount: Int
     retweetCount: Int
     favoriteCount: Int
+    polarity: Int
     searchTerm: String
   ): [Tweet]
 
@@ -133,6 +134,7 @@ type Mutation {
     replyCount: Int!
     retweetCount: Int!
     favoriteCount: Int!
+    polarity: Int!
     searchTerm: String!
   ): Boolean
 
@@ -206,6 +208,7 @@ type Tweet {
   replyCount: Int!
   retweetCount: Int!
   favoriteCount: Int!
+  polarity: Int!
   searchTerm: String!
 }
 

@@ -9,28 +9,6 @@ let senti = new sentiment140({
 
 const fetch = require('node-fetch')
 
-const getSent = async variables => {
-  let sentiVars = {
-    text: variables.text,
-    id: variables.tweetId,
-    query: 'crypto'
-  }
-  let arry = []
-  arry.push(sentiVars)
-  let sentiDat = {}
-  sentiDat['data'] = arry
-
-  await setTimeout(function() {
-    senti.sentiment(sentiDat, function(error, result) {
-      if (result) {
-        console.log(JSON.stringify(result))
-      } else if (error) {
-        console.log(JSON.stringify(error))
-      }
-    })
-  }, 1000)
-}
-
 const listStream = () => {
   // create stream
   const stream = new twit.ListStream('jasond85658576', 'CT', {count: 20})
@@ -102,6 +80,7 @@ const listStream = () => {
       replyCount: parseInt(dat.replyCount),
       retweetCount: parseInt(dat.retweetCount),
       favoriteCount: parseInt(dat.favoriteCount),
+      polarity: 2,
       searchTerm: 'CT'
     }
 
@@ -156,24 +135,47 @@ const listStream = () => {
             })
             .catch(e => console.log(e))
         } else {
-          setTimeout(function() {
-            getSent(variables)
-          }, 1000)
+          let sentiVars = {
+            text: variables.text,
+            id: variables.tweetId,
+            query: 'crypto'
+          }
+          let arry = []
+          arry.push(sentiVars)
+          let sentiDat = {}
+          sentiDat['data'] = arry
 
-          //send to db
-          // fetch('http://localhost:4000', {
-          //   method: 'POST',
-          //   headers: {
-          //     'Content-Type': 'application/json'
-          //   },
-          //   body: JSON.stringify({query: query, variables: variables})
-          // })
-          //   .then(r => {
-          //     r.json()
-          //       .then(r => r)
-          //       .catch(e => console.log(r))
-          //   })
-          //   .catch(e => console.log(e))
+          setTimeout(async function() {
+            try {
+              let r = await senti.sentiment(sentiDat, function(error, result) {
+                if (result) {
+                  console.log(result[0].id, variables.tweetId)
+
+                  let newVars = variables
+                  newVars['polarity'] = result[0].polarity
+
+                  //send to db
+                  fetch('http://localhost:4000', {
+                    method: 'POST',
+                    headers: {
+                      'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({query: query, variables: newVars})
+                  })
+                    .then(r => {
+                      r.json()
+                        .then(r => console.log(r))
+                        .catch(e => console.log(r))
+                    })
+                    .catch(e => console.log(e))
+                } else if (error) {
+                  return
+                }
+              })
+            } catch (err) {
+              return
+            }
+          }, 1000)
         }
       })
       .catch(e => console.log(e))
@@ -181,4 +183,4 @@ const listStream = () => {
 }
 
 // setInterval(wordStream(word), 300000)
-setInterval(listStream, 3000)
+setInterval(listStream, 300000)

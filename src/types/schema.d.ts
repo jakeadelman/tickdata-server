@@ -96,6 +96,7 @@ export namespace GQL {
     replyCount?: number | null
     retweetCount?: number | null
     favoriteCount?: number | null
+    polarity?: number | null
     searchTerm?: string | null
   }
 
@@ -174,6 +175,7 @@ export namespace GQL {
     replyCount: number
     retweetCount: number
     favoriteCount: number
+    polarity: number
     searchTerm: string
   }
 
@@ -270,6 +272,7 @@ export namespace GQL {
     replyCount: number
     retweetCount: number
     favoriteCount: number
+    polarity: number
     searchTerm: string
   }
 

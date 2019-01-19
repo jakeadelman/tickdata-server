@@ -38,6 +38,7 @@ const newTweetQuery = `
         $replyCount: Int!
         $retweetCount: Int!
         $favoriteCount: Int!
+        $polarity: Int!
         $searchTerm: String!
 
       ) {
@@ -58,6 +59,7 @@ const newTweetQuery = `
           replyCount: $replyCount
           retweetCount: $retweetCount
           favoriteCount: $favoriteCount
+          polarity: $polarity
           searchTerm: $searchTerm
         ) 
       }

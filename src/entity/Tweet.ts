@@ -20,5 +20,6 @@ export class Tweet extends BaseEntity {
   @Column('integer') replyCount: number
   @Column('integer') retweetCount: number
   @Column('integer') favoriteCount: number
+  @Column('integer') polarity: number
   @Column('text') searchTerm: string
 }

@@ -117,6 +117,7 @@ export const resolvers: ResolverMap = {
           'replyCount',
           'retweetCount',
           'favoriteCount',
+          'polarity',
           'searchTerm'
         ]
       })
@@ -144,6 +145,7 @@ export const resolvers: ResolverMap = {
           'replyCount',
           'retweetCount',
           'favoriteCount',
+          'polarity',
           'searchTerm'
         ]
       })
@@ -283,6 +285,7 @@ export const resolvers: ResolverMap = {
         replyCount,
         retweetCount,
         favoriteCount,
+        polarity,
         searchTerm
       }: GQL.INewtweetOnMutationArguments
     ) => {
@@ -303,6 +306,7 @@ export const resolvers: ResolverMap = {
         replyCount,
         retweetCount,
         favoriteCount,
+        polarity,
         searchTerm
       })
       await tweet.save()
