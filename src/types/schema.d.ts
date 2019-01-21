@@ -29,6 +29,7 @@ export namespace GQL {
     bitfinextick: Array<IBitfinexTick | null> | null
     tweet: Array<ITweet | null> | null
     hourlytweet: Array<ITweet | null> | null
+    tweettenid: Array<ITweet | null> | null
     twitchmsg: Array<ITwitchMsg | null> | null
   }
 
@@ -102,6 +103,10 @@ export namespace GQL {
 
   interface IHourlytweetOnQueryArguments {
     currHour: string
+    searchTerm: string
+  }
+
+  interface ITweettenidOnQueryArguments {
     searchTerm: string
   }
 
