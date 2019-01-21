@@ -62,6 +62,7 @@ type Query {
 
   hourlytweet(currHour: String!, searchTerm: String!): [Tweet]
   tweettenid(searchTerm: String!): [Tweet]
+  tweetfiftyid(searchTerm: String!): [Tweet]
   twitchmsg(hour: String!): [TwitchMsg]
 }
 

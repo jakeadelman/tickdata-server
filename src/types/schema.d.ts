@@ -30,6 +30,7 @@ export namespace GQL {
     tweet: Array<ITweet | null> | null
     hourlytweet: Array<ITweet | null> | null
     tweettenid: Array<ITweet | null> | null
+    tweetfiftyid: Array<ITweet | null> | null
     twitchmsg: Array<ITwitchMsg | null> | null
   }
 
@@ -107,6 +108,10 @@ export namespace GQL {
   }
 
   interface ITweettenidOnQueryArguments {
+    searchTerm: string
+  }
+
+  interface ITweetfiftyidOnQueryArguments {
     searchTerm: string
   }
 

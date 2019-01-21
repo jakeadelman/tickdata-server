@@ -180,6 +180,38 @@ export const resolvers: ResolverMap = {
       })
       return t
     },
+    tweetfiftyid: async (
+      _,
+      {searchTerm}: GQL.ITweetfiftyidOnQueryArguments
+    ) => {
+      const t = await Tweet.find({
+        where: {searchTerm: searchTerm},
+        select: [
+          'timestamp',
+          'currHour',
+          'hour',
+          'screenName',
+          'tweetId',
+          'isRetweet',
+          'isReplyTo',
+          'text',
+          'userMentions',
+          'hashtags',
+          'images',
+          'urls',
+          'replyCount',
+          'retweetCount',
+          'favoriteCount',
+          'polarity',
+          'searchTerm'
+        ],
+        order: {
+          id: 'DESC'
+        },
+        take: 50
+      })
+      return t
+    },
     twitchmsg: async (_, {hour}: GQL.ITwitchmsgOnQueryArguments) => {
       const t = await TwitchMsg.find({
         where: {hour: hour},
